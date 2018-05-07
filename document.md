@@ -43,6 +43,15 @@
   * [`@api.onchange(fld1,...)` is used in the user interface, to automatically change some field values when other fields are changed.](#apionchangefld1-is-used-in-the-user-interface-to-automatically-change-some-field-values-when-other-fields-are-changed)
 - [ORM built-in methods](#orm-built-in-methods)
   * [Read using `search()` and `browse()`.](#read-using-search-and-browse)
+    + [RPC method](#rpc-method)
+    + [Import and Export method](#import-and-export-method)
+    + [Methods for the user interface](#methods-for-the-user-interface)
+      - [`name_get()` returns a list of (ID, name) tuples with the text representing each record.](#name_get-returns-a-list-of-id-name-tuples-with-the-text-representing-each-record)
+      - [`name_search(name='', args=None, limit=100)` returns a list of (ID, name) tuples, where the display name matches the text in the `name` argument.](#name_searchname-argsnone-limit100-returns-a-list-of-id-name-tuples-where-the-display-name-matches-the-text-in-the-name-argument)
+      - [`name_create(name)` creates a new record with only the title name to use for it.](#name_createname-creates-a-new-record-with-only-the-title-name-to-use-for-it)
+      - [`default_get([fields])` returns a dictionary with the default values for a new record to be created.](#default_getfields-returns-a-dictionary-with-the-default-values-for-a-new-record-to-be-created)
+      - [`fields_get()` is used to describe the model's field definitions, as seen in the `View Fields` option of the developer menu.](#fields_get-is-used-to-describe-the-models-field-definitions-as-seen-in-the-view-fields-option-of-the-developer-menu)
+      - [`fields_view_get()` is used by the web client to retrieve the structure of the UI view to render.](#fields_view_get-is-used-by-the-web-client-to-retrieve-the-structure-of-the-ui-view-to-render)
   * [Write](#write)
 - [Field Attributes](#field-attributes)
   * [`string` is the field default label, to be used in the user interface.](#string-is-the-field-default-label-to-be-used-in-the-user-interface)
@@ -446,7 +455,7 @@ Basic methods provided by the ORM, used mainly to perform CRUD(create, read, upd
 
 ### Read using `search()` and `browse()`.
 
-####RPC method
+#### RPC method
     
     `read([fields])` is similar to the `browse` method, but, instead of a recordset, it returns a list of rows of data with the fields given as its argument. 
     
@@ -458,7 +467,7 @@ Basic methods provided by the ORM, used mainly to perform CRUD(create, read, upd
     
     It is intended to be used by RPC clients and saves them the extra round trip needed when doing a search followed by a read on the results.
 
-####Import and Export method    
+#### Import and Export method    
     
     `load([fields], [data])` is used to import data acquired from a CSV file. 
     
@@ -479,33 +488,33 @@ Basic methods provided by the ORM, used mainly to perform CRUD(create, read, upd
     The optional `raw_data` argument allows for data values to be exported with their Python types, instead
     of the string representation used in CSV.
 
-####Methods for the user interface
+#### Methods for the user interface
 
-    `name_get()` returns a list of (ID, name) tuples with the text representing each record. 
+##### `name_get()` returns a list of (ID, name) tuples with the text representing each record. 
     
     It is used by default for computing the `display_name` value, providing the text representation of relation fields. 
     
     It can be extended to implement custom display representations, such as displaying the record code and name instead of only the name.
     
-    `name_search(name='', args=None, limit=100)` returns a list of (ID, name) tuples, where the display name matches the text in the `name` argument. 
+##### `name_search(name='', args=None, limit=100)` returns a list of (ID, name) tuples, where the display name matches the text in the `name` argument. 
     
     It is used in the UI while typing in a relation field to produce the list with the suggested records matching the typed text. 
     
     For example, it is used to implement product lookup both by name and by reference, while typing in a field to pick a product.
     
-    `name_create(name)` creates a new record with only the title name to use for it.
+##### `name_create(name)` creates a new record with only the title name to use for it.
     
     It is used in the UI for the "quick-create" feature, where you can quickly create a related record by just providing its name. 
     
     It can be extended to provide specific defaults for the new records created through this feature.
     
-    `default_get([fields])` returns a dictionary with the default values for a new record to be created. 
+##### `default_get([fields])` returns a dictionary with the default values for a new record to be created. 
     
     The default values may depend on variables such as the current user or the session context.
     
-    `fields_get()` is used to describe the model's field definitions, as seen in the `View Fields` option of the developer menu.
+##### `fields_get()` is used to describe the model's field definitions, as seen in the `View Fields` option of the developer menu.
     
-    `fields_view_get()` is used by the web client to retrieve the structure of the UI view to render. 
+##### `fields_view_get()` is used by the web client to retrieve the structure of the UI view to render. 
     
     It can be given the ID of the view as an argument or the type of view we want using `view_type='form'`.
      
