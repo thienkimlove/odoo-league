@@ -655,16 +655,16 @@ For field values that are automatically calculated based on other fields, we sho
 
 An example of this is to calculate a header total when the values of the lines are changed.
 
-     - To have field default values calculated dynamically, we can use a field default bound to a function instead of a fixed value.
+- To have field default values calculated dynamically, we can use a field default bound to a function instead of a fixed value.
 
-    - To have values set on other fields when a field is changed, we can use `onchange` functions.
-     
-     An example of this is when picking a customer, setting their currency as the document's currency that can later be manually changed by the user. 
-     Keep in mind that `onchange` only works on form view interaction and not on direct write calls.
-     
-     - For validations, we should use constraint functions decorated with `@api.constraints(fld1,fld2,...)`. 
-     
-     These are like computed fields but, instead of computing values, they are expected to raise errors.
+- To have values set on other fields when a field is changed, we can use `onchange` functions.
+
+An example of this is when picking a customer, setting their currency as the document's currency that can later be manually changed by the user. 
+Keep in mind that `onchange` only works on form view interaction and not on direct write calls.
+
+- For validations, we should use constraint functions decorated with `@api.constraints(fld1,fld2,...)`. 
+
+These are like computed fields but, instead of computing values, they are expected to raise errors.
 
 Consider carefully if you really need to use extensions to the `create` or `write` methods.
 
