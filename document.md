@@ -885,3 +885,12 @@ Through the delegation mechanism, all fields from the inherited model and partne
  If modifications are introduced in partner address fields, these are immediately available to all the models embedding them!
  
  Note that with delegation inheritance, fields are inherited but methods are not.
+
+
+#### Install TOC
+
+`npm install --save --no-bin-links markdown-toc`
+
+Add `<!-- toc -->` to start of document
+
+Run `./node_modules/markdown-toc/cli.js -i document.md`
