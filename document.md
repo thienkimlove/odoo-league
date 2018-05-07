@@ -64,9 +64,9 @@
       - [`fields_get()`](#fields_get)
       - [`fields_view_get()`](#fields_view_get)
   * [Write](#write)
-    + [`.create(values)`](#createvalues)
-    + [`.write(values)`](#writevalues)
-    + [`.unlink()`](#unlink)
+    + [create](#create)
+    + [write](#write)
+    + [unlink](#unlink)
 - [Field Attributes](#field-attributes)
   * [`string`](#string)
   * [`default`](#default)
@@ -611,17 +611,17 @@ For example, you may try this:  `self.fields_view_get(view_type='tree')`.
 
 The ORM provides three methods for the three basic write operations:
 
-##### `<Model>.create(values)` 
-
-creates a new record on the model. Returns the created record.
+##### create
+ 
+ `<Model>.create(values)` creates a new record on the model. Returns the created record.
     
-##### `<Recordset>.write(values)` 
+##### write
 
-updates field values on the recordset. Returns nothing.
+`<Recordset>.write(values)` updates field values on the recordset. Returns nothing.
     
-##### `<Recordset>.unlink()` 
+##### unlink
 
-deletes the records from the database. Returns nothing.
+`<Recordset>.unlink()` deletes the records from the database. Returns nothing.
 
 The `values` argument is a dictionary, mapping field names to values to write.
 
@@ -1066,3 +1066,5 @@ Through the delegation mechanism, all fields from the inherited model and partne
  If modifications are introduced in partner address fields, these are immediately available to all the models embedding them!
  
  Note that with delegation inheritance, fields are inherited but methods are not.
+
+
