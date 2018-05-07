@@ -2,29 +2,79 @@
 
 <!-- toc -->
 
-- [Models](#models)
-  * [Attributes](#attributes)
-  * [Transient and Abstract models](#transient-and-abstract-models)
-  * [Fields](#fields)
-  * [Special field names](#special-field-names)
-  * [ORM decorators](#orm-decorators)
-  * [ORM built-in methods](#orm-built-in-methods)
-  * [Field Attributes](#field-attributes)
-- [Extending models](#extending-models)
-  * [Adding/Modify fields to Existed Model](#addingmodify-fields-to-existed-model)
-  * [Many-to-one relationships](#many-to-one-relationships)
+- [Attributes](#attributes)
+- [Transient and Abstract models](#transient-and-abstract-models)
+- [Fields](#fields)
+  * [`Char(string)` is a basic string field, presented as a single line. The only positional argument expected is the string title.](#charstring-is-a-basic-string-field-presented-as-a-single-line-the-only-positional-argument-expected-is-the-string-title)
+  * [`Text(string)` differs from Char in that it can hold multiline text content, but also one positional argument for the string title.](#textstring-differs-from-char-in-that-it-can-hold-multiline-text-content-but-also-one-positional-argument-for-the-string-title)
+  * [`Selection(selection, string)` is a drop-down selection list.](#selectionselection-string-is-a-drop-down-selection-list)
+  * [`Html(string)` is stored as a text field, but has specific handling of the user interface for HTML content presentation.](#htmlstring-is-stored-as-a-text-field-but-has-specific-handling-of-the-user-interface-for-html-content-presentation)
+  * [`Integer(string)` just expects a string argument for the field title.](#integerstring-just-expects-a-string-argument-for-the-field-title)
+  * [`Float(string, digits)` has a second optional argument, an `(x,y)` tuple with the field's precision.](#floatstring-digits-has-a-second-optional-argument-an-xy-tuple-with-the-fields-precision)
+  * [`Monetary(string, currency_field)` is similar to a float field, but has specific handling for currency. It needs a helper field to](#monetarystring-currency_field-is-similar-to-a-float-field-but-has-specific-handling-for-currency-it-needs-a-helper-field-to)
+  * [`Date(string)` and `Datetime(string)` fields expect only the string text as a positional argument.](#datestring-and-datetimestring-fields-expect-only-the-string-text-as-a-positional-argument)
+  * [`Boolean(string)` holds `True` or `False` values, as you might expect, and only has one positional argument for the string text.](#booleanstring-holds-true-or-false-values-as-you-might-expect-and-only-has-one-positional-argument-for-the-string-text)
+  * [`Binary(string)` stores file-like binary data, and also expects only the string argument.](#binarystring-stores-file-like-binary-data-and-also-expects-only-the-string-argument)
+  * [`Relation` fields](#relation-fields)
   * [Many-to-many relationships](#many-to-many-relationships)
   * [One-to-Many Relationship](#one-to-many-relationship)
   * [Hierarchical relationships](#hierarchical-relationships)
   * [Dynamic relationships using Reference fields](#dynamic-relationships-using-reference-fields)
+  * [`Related fields`](#related-fields)
   * [Model constraints](#model-constraints)
   * [Models inherit](#models-inherit)
+- [Special field names](#special-field-names)
+  * [`id` field is an automatic number uniquely identifying each record, and used as the database primary key.](#id-field-is-an-automatic-number-uniquely-identifying-each-record-and-used-as-the-database-primary-key)
+  * [`create_uid` is for the user that created the record](#create_uid-is-for-the-user-that-created-the-record)
+  * [`create_date` is for the date and time when the record is created](#create_date-is-for-the-date-and-time-when-the-record-is-created)
+  * [`write_uid` is for the last user to modify the record](#write_uid-is-for-the-last-user-to-modify-the-record)
+  * [`write_date` is for the last date and time when the record was modified](#write_date-is-for-the-last-date-and-time-when-the-record-was-modified)
+  * [`name` is used by default as the display name for the record.](#name-is-used-by-default-as-the-display-name-for-the-record)
+  * [`active`, of type Boolean, allows us to inactivate records.](#active-of-type-boolean-allows-us-to-inactivate-records)
+  * [`sequence`, of type Integer, if present in a list view, allows](#sequence-of-type-integer-if-present-in-a-list-view-allows)
+  * [`state`, of type Selection, represents basic states of the record's life cycle and can be used by the state's field attribute to dynamically modify the view; some form fields can be made `readonly`, `required`, or `invisible` in specific record states.](#state-of-type-selection-represents-basic-states-of-the-records-life-cycle-and-can-be-used-by-the-states-field-attribute-to-dynamically-modify-the-view-some-form-fields-can-be-made-readonly-required-or-invisible-in-specific-record-states)
+  * [`parent_id`, `parent_left`, and `parent_right`, of type Integer, have special meaning for parent/child hierarchical relations.](#parent_id-parent_left-and-parent_right-of-type-integer-have-special-meaning-for-parentchild-hierarchical-relations)
+- [ORM decorators](#orm-decorators)
+  * [`@api.multi`](#apimulti)
+  * [`@api.one`](#apione)
+  * [`@api.model`](#apimodel)
+  * [`@api.depends(fld1,...)` is used for computed field functions, to identify on what changes the (re)calculation should be triggered.](#apidependsfld1-is-used-for-computed-field-functions-to-identify-on-what-changes-the-recalculation-should-be-triggered)
+  * [`@api.constrains(fld1,...)` is used for validation functions, and performs checks for when any of the mentioned fields are changed.](#apiconstrainsfld1-is-used-for-validation-functions-and-performs-checks-for-when-any-of-the-mentioned-fields-are-changed)
+  * [`@api.onchange(fld1,...)` is used in the user interface, to automatically change some field values when other fields are changed.](#apionchangefld1-is-used-in-the-user-interface-to-automatically-change-some-field-values-when-other-fields-are-changed)
+- [ORM built-in methods](#orm-built-in-methods)
+  * [Read using `search()` and `browse()`.](#read-using-search-and-browse)
+  * [Write](#write)
+- [Field Attributes](#field-attributes)
+  * [`string` is the field default label, to be used in the user interface.](#string-is-the-field-default-label-to-be-used-in-the-user-interface)
+  * [`default` sets a default value for the field.](#default-sets-a-default-value-for-the-field)
+  * [`size` applies only to `Char` fields, and can set a maximum size allowed.](#size-applies-only-to-char-fields-and-can-set-a-maximum-size-allowed)
+  * [`translate` applies only to `Char`, `Text`, and `Html` fields, and makes the field contents translatable, holding different values for different languages.](#translate-applies-only-to-char-text-and-html-fields-and-makes-the-field-contents-translatable-holding-different-values-for-different-languages)
+  * [`help` provides the text for tooltips displayed to users.](#help-provides-the-text-for-tooltips-displayed-to-users)
+  * [`readonly=True` makes the field not editable in the user interface by default.](#readonlytrue-makes-the-field-not-editable-in-the-user-interface-by-default)
+  * [`index=True` adds a database index on the field, for faster search operations at the expense of slower write operations.](#indextrue-adds-a-database-index-on-the-field-for-faster-search-operations-at-the-expense-of-slower-write-operations)
+  * [`copy=False` has the field ignored when using the duplicate record feature - the `copy()` ORM method.](#copyfalse-has-the-field-ignored-when-using-the-duplicate-record-feature---the-copy-orm-method)
+  * [`groups` allows limiting the field's access and visibility to only some groups.](#groups-allows-limiting-the-fields-access-and-visibility-to-only-some-groups)
+  * [`states` expects dictionary mapping values for UI attributes depending on values of the state field.](#states-expects-dictionary-mapping-values-for-ui-attributes-depending-on-values-of-the-state-field)
+  * [`deprecated=True` logs a warning whenever the field is being used](#deprecatedtrue-logs-a-warning-whenever-the-field-is-being-used)
+  * [`oldname='field'` is used when a field is renamed in a newer version, enabling the data in the old field to be automatically copied into the new field.](#oldnamefield-is-used-when-a-field-is-renamed-in-a-newer-version-enabling-the-data-in-the-old-field-to-be-automatically-copied-into-the-new-field)
+- [Adding/Modify fields to Existed Model](#addingmodify-fields-to-existed-model)
+- [Many-to-one relationships](#many-to-one-relationships)
+  * [`ondelete` defines what happens when the related record is deleted.](#ondelete-defines-what-happens-when-the-related-record-is-deleted)
+  * [`context` is a dictionary of data, meaningful for the web client views, to carry information when navigating through the relationship, for example, to set default](#context-is-a-dictionary-of-data-meaningful-for-the-web-client-views-to-carry-information-when-navigating-through-the-relationship-for-example-to-set-default)
+  * [`domain` is a domain expression; a list of tuples used to filter the records made available for selection on the relation field.](#domain-is-a-domain-expression-a-list-of-tuples-used-to-filter-the-records-made-available-for-selection-on-the-relation-field)
+  * [`auto_join=True` allows the ORM to use SQL joins when doing searches using this relationship.](#auto_jointrue-allows-the-orm-to-use-sql-joins-when-doing-searches-using-this-relationship)
+- [Many-to-many relationships](#many-to-many-relationships-1)
+- [One-to-Many Relationship](#one-to-many-relationship-1)
+- [Hierarchical relationships](#hierarchical-relationships-1)
+- [Dynamic relationships using Reference fields](#dynamic-relationships-using-reference-fields-1)
+- [Model constraints](#model-constraints-1)
+- [Models inherit](#models-inherit-1)
+  * [`prototype inheritance`](#prototype-inheritance)
+  * [`delegation inheritance`](#delegation-inheritance)
 
 <!-- tocstop -->
 
-### Models
-
-#### Attributes
+## Attributes
 
 * `_name` is the internal identifier for the Odoo model we are creating. Mandatory
 when creating a new model.
@@ -51,7 +101,7 @@ it can be anything you could use there, although it has smart behavior and suppo
 
 * `_inherits`
 
-#### Transient and Abstract models
+## Transient and Abstract models
 
 `Transient models` are based on the `models.TransientModel` class and are used for wizard-style user interaction.
 
@@ -72,13 +122,13 @@ models.
 
 This particular example is discussed later in this chapter.
 
-#### Fields
+## Fields
 
-* `Char(string)` is a basic string field, presented as a single line. The only positional argument expected is the string title.
+### `Char(string)` is a basic string field, presented as a single line. The only positional argument expected is the string title.
 
-* `Text(string)` differs from Char in that it can hold multiline text content, but also one positional argument for the string title.
+### `Text(string)` differs from Char in that it can hold multiline text content, but also one positional argument for the string title.
 
-* `Selection(selection, string)` is a drop-down selection list.
+### `Selection(selection, string)` is a drop-down selection list.
 
     The first argument is the list of selectable options and the second is the string title.
 
@@ -87,37 +137,37 @@ This particular example is discussed later in this chapter.
     When extending through inheritance, the `selection_add` argument is available to append new items to an existing selection list.
 
 
-* `Html(string)` is stored as a text field, but has specific handling of the user interface for HTML content presentation.
+### `Html(string)` is stored as a text field, but has specific handling of the user interface for HTML content presentation.
 
     For security reasons, it is sanitized by default, but this behavior can be overridden.
 
-* `Integer(string)` just expects a string argument for the field title.
+### `Integer(string)` just expects a string argument for the field title.
 
-* `Float(string, digits)` has a second optional argument, an `(x,y)` tuple with the field's precision.
+### `Float(string, digits)` has a second optional argument, an `(x,y)` tuple with the field's precision.
 
     `x` is the total number of digits; of those, `y` are decimal digits.
 
 
-* `Monetary(string, currency_field)` is similar to a float field, but has specific handling for currency. It needs a helper field to
+### `Monetary(string, currency_field)` is similar to a float field, but has specific handling for currency. It needs a helper field to
 set the currency being used.
 
     By default, that field is expected to be named `currency_id`, but it has a different name we can use for the second positional argument to declare it.
 
-* `Date(string)` and `Datetime(string)` fields expect only the string text as a positional argument.
+### `Date(string)` and `Datetime(string)` fields expect only the string text as a positional argument.
 
     For historical reasons, the ORM handles their values in the UTC timezone represented as a string format. Helper functions should
 be used to convert them to actual date objects.
 
 This is discussed in more detail in Chapter 7, Business Logic - Supporting Business Processes.
 
-* `Boolean(string)` holds `True` or `False` values, as you might expect, and only has one positional argument for the string text.
+### `Boolean(string)` holds `True` or `False` values, as you might expect, and only has one positional argument for the string text.
 
 
-* `Binary(string)` stores file-like binary data, and also expects only the string argument.
+### `Binary(string)` stores file-like binary data, and also expects only the string argument.
 
     It can be handled by Python code using base64 encoded strings.
 
-* `Relation` fields
+### `Relation` fields
 
 Example:  `Post` is in `Category` and have many `Tags`
 
@@ -126,13 +176,13 @@ category_id = fields.Many2one('generation.category', 'Category')
 tag_ids = fields.Many2many('generation.tag', string='Tags')
 
 ```
--  [Many-to-many relationships](#many-to-many-relationships) 
--  [One-to-Many Relationship](#one-to-many-relationship) 
--  [Hierarchical relationships](#hierarchical-relationships) 
--  [Dynamic relationships using Reference fields](#dynamic-relationships-using-reference-fields) 
+### [Many-to-many relationships](#many-to-many-relationships) 
+###  [One-to-Many Relationship](#one-to-many-relationship) 
+###  [Hierarchical relationships](#hierarchical-relationships) 
+### [Dynamic relationships using Reference fields](#dynamic-relationships-using-reference-fields) 
 
 
-* `Related fields` 
+### `Related fields` 
 
 Instead of  add new field to `post` which change when this parent category name change as below:
 
@@ -187,61 +237,61 @@ This means that we can search and write to them out of the box, without having t
 It's also worth noting that these `Related` fields can also be stored in a database, using `store=True`, just like any other computed
 field.
 
-* [Model constraints](#model-constraints)
+### [Model constraints](#model-constraints)
 
-* [Models inherit](#models-inherit)
+### [Models inherit](#models-inherit)
 
-#### Special field names
+## Special field names
 
 A few field names are reserved for use by the ORM.
 
-* `id` field is an automatic number uniquely identifying each record, and used as the database primary key.
+### `id` field is an automatic number uniquely identifying each record, and used as the database primary key.
 
     It's automatically added to every model.
 
     The following fields are automatically created on new models, unless the `_log_access=False` model attribute is set:
 
-* `create_uid` is for the user that created the record
-* `create_date` is for the date and time when the record is created
-* `write_uid` is for the last user to modify the record
-* `write_date` is for the last date and time when the record was modified
+### `create_uid` is for the user that created the record
+### `create_date` is for the date and time when the record is created
+### `write_uid` is for the last user to modify the record
+### `write_date` is for the last date and time when the record was modified
 
     The information in these fields is available in the web client, in the `Developer Mode` menu, by selecting the `View Metadata` option.
 
-* `name` is used by default as the display name for the record.
+### `name` is used by default as the display name for the record.
 
     Usually, it is a `Char`, but can also be a `Text` or a `Many2one` field type.
 
     We can choose another field to be used for the display name, using the `_rec_name` model attribute.
 
-* `active`, of type Boolean, allows us to inactivate records.
+### `active`, of type Boolean, allows us to inactivate records.
 
     Records with `active==False` will automatically be excluded from queries.
 
     To access them, an `('active','=',False)` condition must be added to the search domain, or the `'active_test': False` key should
 be set on the current context.
 
-* `sequence`, of type Integer, if present in a list view, allows
+### `sequence`, of type Integer, if present in a list view, allows
   us to manually drag records to define the order of the records.
 
     For it to work properly, you should not forget to include it in the model's `_order` attribute.
 
-* `state`, of type Selection, represents basic states of the record's life cycle and can be used by the state's field attribute to dynamically modify the view; some form fields can be made `readonly`, `required`, or `invisible` in specific record states.
+### `state`, of type Selection, represents basic states of the record's life cycle and can be used by the state's field attribute to dynamically modify the view; some form fields can be made `readonly`, `required`, or `invisible` in specific record states.
 
-* `parent_id`, `parent_left`, and `parent_right`, of type Integer, have special meaning for parent/child hierarchical relations.
+### `parent_id`, `parent_left`, and `parent_right`, of type Integer, have special meaning for parent/child hierarchical relations.
 
     We will discuss them in detail later in this chapter.
     
     
     
     
-#### ORM decorators
+## ORM decorators
 
 Allow us to add certain features to our models, such as implementing validations and automatic computations.
 
 If no decorator is used on a model method, it will default to `@api.multi` behavior.
 
-* `@api.multi` 
+### `@api.multi` 
 
 We want a custom method to perform some actions on a recordset. For this, we should use `@api.multi`, and in that case, the self argument will be the recordset
 to work with. 
@@ -250,7 +300,7 @@ The method's logic will usually include a `for` loop iterating on it.
 
 This is surely the most frequently used decorator.
 
-* `@api.one` 
+### `@api.one` 
 
 The method is prepared to work with a single record (a singleton).
 
@@ -272,7 +322,7 @@ Example
         return self._reopen_form()
 ```
 
-* `@api.model`
+### `@api.model`
 
 In some cases, the method is expected to work at the class level, and not on particular records. 
 
@@ -310,7 +360,7 @@ Example in one class `SupplierModel` we have
 In Class `Expert` we call `self.env['generation.supplier'].upsert_supplier`.
 
 
-* `@api.depends(fld1,...)` is used for computed field functions, to identify on what changes the (re)calculation should be triggered. 
+### `@api.depends(fld1,...)` is used for computed field functions, to identify on what changes the (re)calculation should be triggered. 
 
 It must set values on the computed fields, otherwise it will error.
 
@@ -324,7 +374,7 @@ Example
             post.category_name = post.category_id.name
 ```
 
-* `@api.constrains(fld1,...)` is used for validation functions, and performs checks for when any of the mentioned fields are changed. 
+### `@api.constrains(fld1,...)` is used for validation functions, and performs checks for when any of the mentioned fields are changed. 
 
 It should not write changes in the data. 
 
@@ -341,7 +391,7 @@ Example
                 
 ``` 
 
-* `@api.onchange(fld1,...)` is used in the user interface, to automatically change some field values when other fields are changed. 
+### `@api.onchange(fld1,...)` is used in the user interface, to automatically change some field values when other fields are changed. 
 
 The self argument is a singleton with the current form data, and the method should set values on it for the changes that should happen in the form.
 
@@ -390,13 +440,13 @@ The value for the domain key looks like this: `{'team_ids': [('is_author', '=', 
 When using the preceding decorators, no return value is needed. Except for `onchange` methods that can optionally return a dict with a warning message to display in the user
 interface.
 
-#### ORM built-in methods
+## ORM built-in methods
 
 Basic methods provided by the ORM, used mainly to perform CRUD(create, read, update and delete) operations on our model data.
 
-* Read using `search()` and `browse()`.
+### Read using `search()` and `browse()`.
 
-* RPC method
+####RPC method
     
     `read([fields])` is similar to the `browse` method, but, instead of a recordset, it returns a list of rows of data with the fields given as its argument. 
     
@@ -408,7 +458,7 @@ Basic methods provided by the ORM, used mainly to perform CRUD(create, read, upd
     
     It is intended to be used by RPC clients and saves them the extra round trip needed when doing a search followed by a read on the results.
 
-* Import and Export method    
+####Import and Export method    
     
     `load([fields], [data])` is used to import data acquired from a CSV file. 
     
@@ -429,7 +479,7 @@ Basic methods provided by the ORM, used mainly to perform CRUD(create, read, upd
     The optional `raw_data` argument allows for data values to be exported with their Python types, instead
     of the string representation used in CSV.
 
-* Methods for the user interface
+####Methods for the user interface
 
     `name_get()` returns a list of (ID, name) tuples with the text representing each record. 
     
@@ -464,7 +514,7 @@ Basic methods provided by the ORM, used mainly to perform CRUD(create, read, upd
        
     
 
-* Write
+### Write
 
 The ORM provides three methods for the three basic write operations:
 
@@ -550,49 +600,49 @@ This combination ensures that the custom login inside the `if` statement runs on
 
 
 
-#### Field Attributes
+## Field Attributes
 
-* `string` is the field default label, to be used in the user interface.
+### `string` is the field default label, to be used in the user interface.
 
     Except for `Selection` and `Relational` fields, it is the first positional argument, so most of the time it is not used as a keyword argument.
 
     If not provided, it is automatically generated from the field name.
 
-* `default` sets a default value for the field.
+### `default` sets a default value for the field.
 
     It can be a static value, such as a string,  or a callable reference, either a named function or an anonymous function (a lambda expression).
 
     In the stage model,  we can see an example of a default value on the `date_created` field that uses a lambda expression to set the current date  and time when a new record is created.
 
-* `size` applies only to `Char` fields, and can set a maximum size allowed.
+### `size` applies only to `Char` fields, and can set a maximum size allowed.
 
     It's  recommended to not use it unless there is a business requirement for it, for example, a social security number with a maximum length allowed.
 
-* `translate` applies only to `Char`, `Text`, and `Html` fields, and makes the field contents translatable, holding different values for different languages.
+### `translate` applies only to `Char`, `Text`, and `Html` fields, and makes the field contents translatable, holding different values for different languages.
 
-* `help` provides the text for tooltips displayed to users.
+### `help` provides the text for tooltips displayed to users.
 
-* `readonly=True` makes the field not editable in the user interface by default.
+### `readonly=True` makes the field not editable in the user interface by default.
 
     This is not enforced at the API level; code in model methods will still be capable of writing to it.
 
     It is only a user interface setting.
 
-* `required=True` makes the field mandatory in the user interface by default.
+###`required=True` makes the field mandatory in the user interface by default.
 
     This is enforced at the database level by adding a `NOT NULL` constraint on the column.
 
-* `index=True` adds a database index on the field, for faster search operations at the expense of slower write operations.
+### `index=True` adds a database index on the field, for faster search operations at the expense of slower write operations.
 
-* `copy=False` has the field ignored when using the duplicate record feature - the `copy()` ORM method.
+### `copy=False` has the field ignored when using the duplicate record feature - the `copy()` ORM method.
 
     The non-relational fields are copyable by default.
 
-* `groups` allows limiting the field's access and visibility to only some groups.
+### `groups` allows limiting the field's access and visibility to only some groups.
 
     It expects a comma-separated list of XML IDs for security groups, such as `groups='base.group_user,base.group_system'`.
 
-* `states` expects dictionary mapping values for UI attributes depending on values of the state field.
+### `states` expects dictionary mapping values for UI attributes depending on values of the state field.
 
     The attributes that can be used are `readonly`, `required`, and  `invisible`, for example: `states={'done':[('readonly',True)]}`.
 
@@ -621,15 +671,11 @@ This combination ensures that the custom login inside the `if` statement runs on
 
     Note : views support a `states` attribute, but it has a different usage: it accepts a comma-separated list of states to control when the element should be visible
 
-* `deprecated=True` logs a warning whenever the field is being used
+### `deprecated=True` logs a warning whenever the field is being used
 
-* `oldname='field'` is used when a field is renamed in a newer version, enabling the data in the old field to be automatically copied into the new field.
+### `oldname='field'` is used when a field is renamed in a newer version, enabling the data in the old field to be automatically copied into the new field.
 
-#### 
-
-### Extending models
-
-#### Adding/Modify fields to Existed Model
+## Adding/Modify fields to Existed Model
 
 ```
 class TodoTask(models.Model):
@@ -640,7 +686,7 @@ class TodoTask(models.Model):
     effort_estimate = fields.Integer() # add
 ```
 
-#### Many-to-one relationships
+## Many-to-one relationships
 
 Example:  `Post` is in `Category` and have many `Tags`
 
@@ -655,27 +701,27 @@ It creates a field in the database table with a foreign key to the related table
 
 Some additional named arguments are also available to use with this type of field:
 
-* `ondelete` defines what happens when the related record is deleted.
+### `ondelete` defines what happens when the related record is deleted.
 
     Its default is `set null`, meaning that an empty value is set when the related record is deleted.
 
     Other possible values are `restricted`, raising an error preventing the deletion, and `cascade`, which also deletes this record.
 
 
-* `context` is a dictionary of data, meaningful for the web client views, to carry information when navigating through the relationship, for example, to set default
+### `context` is a dictionary of data, meaningful for the web client views, to carry information when navigating through the relationship, for example, to set default
 values.
 
     It will be better explained in Chapter 7, Business Logic - Supporting business processes.
 
-* `domain` is a domain expression; a list of tuples used to filter the records made available for selection on the relation field.
+### `domain` is a domain expression; a list of tuples used to filter the records made available for selection on the relation field.
 
     See Chapter 7, Business Logic Supporting Business Processes for more details.
-* `auto_join=True` allows the ORM to use SQL joins when doing searches using this relationship.
+### `auto_join=True` allows the ORM to use SQL joins when doing searches using this relationship.
 
     If used, the access security rules will be bypassed, and the user
 could have access to related records the security rules wouldn't allow, but the SQL queries will be more efficient and run faster.
 
-#### Many-to-many relationships
+## Many-to-many relationships
 
 Example:  `Post` have many `Tags`
 
@@ -725,7 +771,7 @@ If we also add a Many2many field to the `Tags` model, Odoo infers that this many
         `
 
 
-#### One-to-Many Relationship
+## One-to-Many Relationship
 
 An inverse of a `Many2one` can be added to the other end of the relationship. 
 
@@ -750,7 +796,7 @@ The first two positional arguments correspond to the `comodel_name` and `inverse
 The additional keyword parameters available are the same as for Many2one: `context`, `domain`, and `ondelete` (here acting on the many side of the relationship).
 
 
-#### Hierarchical relationships
+## Hierarchical relationships
 
 ```class GenerationCategory(models.Model):
     # Hierarchic relationships:
@@ -769,7 +815,7 @@ The additional keyword parameters available are the same as for Many2one: `conte
             'Child Category')
 ```
 
-#### Dynamic relationships using Reference fields
+## Dynamic relationships using Reference fields
 
 Regular relational fields reference one fixed `comodel`. 
 
@@ -791,7 +837,7 @@ For example, we can use it to add a `Refers` to field to To-Do tasks that can ei
 
 ```
 
-#### Model constraints
+## Model constraints
 
 To enforce data integrity, models also support two types of constraints: SQL and Python.
 
@@ -817,9 +863,9 @@ Suppose we don't want to allow two active tasks with the same title, as follows:
                 
 ```
 
-#### Models inherit
+## Models inherit
 
-* `prototype inheritance` 
+### `prototype inheritance` 
 
 If `_inherit` without `_name`. It will add to existed model.
 
@@ -851,7 +897,7 @@ unrelated. Only the definitions are shared.
 In practice, this type of inheritance is usually used with abstract mixin classes. It is rarely
 used to inherit from regular models because it duplicates data structures.
 
-* `delegation inheritance`
+### `delegation inheritance`
 
 by using the `_inherits` attribute. It allows us to create a new model that contains and extends an existing model.
 
@@ -885,12 +931,3 @@ Through the delegation mechanism, all fields from the inherited model and partne
  If modifications are introduced in partner address fields, these are immediately available to all the models embedding them!
  
  Note that with delegation inheritance, fields are inherited but methods are not.
-
-
-#### Install TOC
-
-`npm install --save --no-bin-links markdown-toc`
-
-Add `<!-- toc -->` to start of document
-
-Run `./node_modules/markdown-toc/cli.js -i document.md`
