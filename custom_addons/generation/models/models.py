@@ -8,14 +8,6 @@ class TimeModel(models.AbstractModel):
 
     name = fields.Char('Name')
     sequence = fields.Integer('Sequence', default=0)
-    status = fields.Boolean('Active?', default=True)
-
-    updated_at = fields.Datetime(
-        'Updated Date and Time',
-        default=lambda self: fields.Datetime.now())
-    created_at = fields.Datetime(
-        'Create Date and Time',
-        default=lambda self: fields.Datetime.now())
-
+    active = fields.Boolean('Active?', default=True)
 
 class Category(TimeModel):
