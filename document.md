@@ -116,7 +116,6 @@
     + [`help`](#help-1)
 - [ORM built-in methods](#orm-built-in-methods)
   * [Read using `search()` and `browse()`.](#read-using-search-and-browse)
-  * [`search_count`](#search_count)
     + [RPC method](#rpc-method)
       - [`read([fields])`](#readfields)
       - [`search_read([domain], [fields], offset=0, limit=None, order=None)`](#search_readdomain-fields-offset0-limitnone-ordernone)
@@ -134,6 +133,10 @@
     + [create](#create)
     + [write](#write)
     + [unlink](#unlink)
+  * [Example ORM](#example-orm)
+    + [`search_count`](#search_count)
+    + [Customize `create` and `write` in models.](#customize-create-and-write-in-models)
+    + [Continue..](#continue)
 
 <!-- tocstop -->
 
@@ -1174,18 +1177,6 @@ Basic methods provided by the ORM, used mainly to perform CRUD(create, read, upd
 
 #### Read using `search()` and `browse()`.
 
-#### `search_count`
-
-Example in model 
-
-```text
-for task in self:
-    task.user_todo_count = task.search_count(
-        [('user_id', '=', task.user_id.id)])
-```
-
-This method return count total.
-
 ##### RPC method
     
 ###### `read([fields])` 
@@ -1359,5 +1350,41 @@ With this technique, our specific logic is guarded by an `if` statement, and run
 Furthermore, our `self.write()` operations should use `with_context` to set that marker. 
 
 This combination ensures that the custom login inside the `if` statement runs only once, and is not triggered on further `write()` calls, avoiding the infinite loop.
+
+#### Example ORM
+
+
+##### `search_count`
+
+return total.
+
+```textmate
+def _compute_user_todo_count(self):
+        for task in self:
+            task.user_todo_count = task.search_count(
+                [('user_id', '=', task.user_id.id)])
+
+    user_todo_count = fields.Integer(
+        'User To-Do Count',
+        compute='_compute_user_todo_count')
+```
+
+##### Customize `create` and `write` in models.
+
+```textmate
+    @api.model
+    def create(self, vals):
+        vals['history_ids'] = [(6, 0, [vals.get('club_id')])]
+        record = super(Player, self).create(vals)
+        return record
+
+    @api.multi
+    def write(self, vals):
+        vals['history_ids'] = [(4, vals.get('club_id'), 0)]
+        super(Player, self).write(vals)
+        return True
+```
+##### Continue..
+
 
 
