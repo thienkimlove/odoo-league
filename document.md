@@ -48,25 +48,6 @@
   * [`@api.depends(fld1,...)`](#apidependsfld1)
   * [`@api.constrains(fld1,...)`](#apiconstrainsfld1)
   * [`@api.onchange(fld1,...)`](#apionchangefld1)
-- [ORM built-in methods](#orm-built-in-methods)
-  * [Read using `search()` and `browse()`.](#read-using-search-and-browse)
-    + [RPC method](#rpc-method)
-      - [`read([fields])`](#readfields)
-      - [`search_read([domain], [fields], offset=0, limit=None, order=None)`](#search_readdomain-fields-offset0-limitnone-ordernone)
-    + [Import and Export method](#import-and-export-method)
-      - [`load([fields], [data])`](#loadfields-data)
-      - [`export_data([fields], raw_data=False)`](#export_datafields-raw_datafalse)
-    + [Methods for the user interface](#methods-for-the-user-interface)
-      - [`name_get()`](#name_get)
-      - [`name_search(name='', args=None, limit=100)`](#name_searchname-argsnone-limit100)
-      - [`name_create(name)`](#name_createname)
-      - [`default_get([fields])`](#default_getfields)
-      - [`fields_get()`](#fields_get)
-      - [`fields_view_get()`](#fields_view_get)
-  * [Write](#write)
-    + [create](#create)
-    + [write](#write)
-    + [unlink](#unlink)
 - [Field Attributes](#field-attributes)
   * [`string`](#string)
   * [`default`](#default)
@@ -133,8 +114,26 @@
     + [`string`](#string-2)
     + [`context`](#context-2)
     + [`help`](#help-1)
-- [ORM query](#orm-query)
+- [ORM built-in methods](#orm-built-in-methods)
+  * [Read using `search()` and `browse()`.](#read-using-search-and-browse)
   * [`search_count`](#search_count)
+    + [RPC method](#rpc-method)
+      - [`read([fields])`](#readfields)
+      - [`search_read([domain], [fields], offset=0, limit=None, order=None)`](#search_readdomain-fields-offset0-limitnone-ordernone)
+    + [Import and Export method](#import-and-export-method)
+      - [`load([fields], [data])`](#loadfields-data)
+      - [`export_data([fields], raw_data=False)`](#export_datafields-raw_datafalse)
+    + [Methods for the user interface](#methods-for-the-user-interface)
+      - [`name_get()`](#name_get)
+      - [`name_search(name='', args=None, limit=100)`](#name_searchname-argsnone-limit100)
+      - [`name_create(name)`](#name_createname)
+      - [`default_get([fields])`](#default_getfields)
+      - [`fields_get()`](#fields_get)
+      - [`fields_view_get()`](#fields_view_get)
+  * [Write](#write)
+    + [create](#create)
+    + [write](#write)
+    + [unlink](#unlink)
 
 <!-- tocstop -->
 
@@ -556,188 +555,6 @@ The value for the domain key looks like this: `{'team_ids': [('is_author', '=', 
 
 When using the preceding decorators, no return value is needed. Except for `onchange` methods that can optionally return a dict with a warning message to display in the user
 interface.
-
-### ORM built-in methods
-
-Basic methods provided by the ORM, used mainly to perform CRUD(create, read, update and delete) operations on our model data.
-
-#### Read using `search()` and `browse()`.
-
-##### RPC method
-    
-###### `read([fields])` 
-
-is similar to the `browse` method, but, instead of a recordset, it returns a list of rows of data with the fields given as its argument. 
-    
-Each row is a dictionary. 
-
-It provides a serialized representation of the data that can be sent through RPC protocols and is intended to be used by client programs and not in server logic.
-    
-###### `search_read([domain], [fields], offset=0, limit=None, order=None)` 
-
-performs a search operation followed by a read on the resulting record list. 
-    
-It is intended to be used by RPC clients and saves them the extra round trip needed when doing a search followed by a read on the results.
-
-##### Import and Export method    
-    
-###### `load([fields], [data])` 
-
-is used to import data acquired from a CSV file. 
-    
-The first argument is the list of fields to import, and it maps directly to a CSV top row.
-
-The second argument is a list of records, where each record is a list of string values to parse and import, and it maps directly to the CSV data rows and columns.
-     
-It implements the features of CSV data import, such as the external identifiers support. 
- 
-It is used by the web client `Import` feature.
-     
-###### `export_data([fields], raw_data=False)` 
-
-is used by the web client Export function. 
-    
-It returns a dictionary with a data key containing the data: a list of rows.
-
-The field names can use the `.id` and `/id` suffixes used in CSV files, and the data is in a format compatible with an importable CSV file.
-
-The optional `raw_data` argument allows for data values to be exported with their Python types, instead
-of the string representation used in CSV.
-
-##### Methods for the user interface
-
-###### `name_get()` 
-
-returns a list of (ID, name) tuples with the text representing each record. 
-    
-It is used by default for computing the `display_name` value, providing the text representation of relation fields. 
-    
-It can be extended to implement custom display representations, such as displaying the record code and name instead of only the name.
-    
-###### `name_search(name='', args=None, limit=100)` 
-
-returns a list of `(ID, name)` tuples, where the display name matches the text in the `name` argument. 
-    
-It is used in the UI while typing in a relation field to produce the list with the suggested records matching the typed text. 
-
-For example, it is used to implement product lookup both by name and by reference, while typing in a field to pick a product.
-    
-###### `name_create(name)` 
-
-creates a new record with only the title name to use for it.
-    
-It is used in the UI for the "quick-create" feature, where you can quickly create a related record by just providing its name. 
-
-It can be extended to provide specific defaults for the new records created through this feature.
-    
-###### `default_get([fields])` 
-
-returns a dictionary with the default values for a new record to be created. 
-    
-The default values may depend on variables such as the current user or the session context.
-    
-###### `fields_get()` 
-
-is used to describe the model's field definitions, as seen in the `View Fields` option of the developer menu.
-    
-###### `fields_view_get()` 
-
-is used by the web client to retrieve the structure of the UI view to render. 
-    
-It can be given the ID of the view as an argument or the type of view we want using `view_type='form'`.
- 
-For example, you may try this:  `self.fields_view_get(view_type='tree')`. 
- 
-#### Write
-
-The ORM provides three methods for the three basic write operations:
-
-##### create
- 
- `<Model>.create(values)` creates a new record on the model. Returns the created record.
-    
-##### write
-
-`<Recordset>.write(values)` updates field values on the recordset. Returns nothing.
-    
-##### unlink
-
-`<Recordset>.unlink()` deletes the records from the database. Returns nothing.
-
-The `values` argument is a dictionary, mapping field names to values to write.
-
-In some cases, we need to extend these methods to add some business logic to be triggered whenever these actions are executed. 
-
-By placing our logic in the appropriate section of the custom method, we can have the code run before or after the main operations are executed.
-
-```text
-@api.model
-    def create(self, vals):
-        # Code before create: should use the `vals` dict
-        new_record = super(TodoTask, self).create(vals)
-        # Code after create: can use the `new_record` created
-        return new_record
-```
-
-A custom `write()` would follow this structure:
-
-```text
-@api.multi
-def write(self, vals): 
-    #can use `self`, with the old values
-    super(TodoTask, self).write(vals)
-    # Code after write: can use `self`, with the updated values
-    return True
-```
-While extending `create()` and `write()` opens up a lot of possibilities, remember in many
-cases we don't need to do that, since there are tools also available that may be better suited:
-
-For field values that are automatically calculated based on other fields, we should use computed fields. 
-
-An example of this is to calculate a header total when the values of the lines are changed.
-
-- To have field default values calculated dynamically, we can use a field default bound to a function instead of a fixed value.
-
-- To have values set on other fields when a field is changed, we can use `onchange` functions.
-
-An example of this is when picking a customer, setting their currency as the document's currency that can later be manually changed by the user. 
-Keep in mind that `onchange` only works on form view interaction and not on direct write calls.
-
-- For validations, we should use constraint functions decorated with `@api.constraints(fld1,fld2,...)`. 
-
-These are like computed fields but, instead of computing values, they are expected to raise errors.
-
-Consider carefully if you really need to use extensions to the `create` or `write` methods.
-
-In most cases, we just need to perform some validation or automatically compute some value, when the record is saved. 
-
-But we have better tools for this: validations are best implemented with `@api.constrains` methods, and automatic calculations are better implemented as computed fields. 
-
-In this case, we need to compute field values when saving.
-
-If, for some reason, computed fields are not a valid solution, the best approach is to have our logic at the top of the method, accumulating the changes needed into the `vals` dictionary that will be passed to the final `super()` call.
-
-
-For the `write()` method, having further write operations on the same model will lead to a recursion loop and end with an error when the worker process resources are exhausted.
-
-Please consider if this is really needed. 
-
-If it is, a technique to avoid the recursion loop is to set a flag in the context. 
-
-For example, we could add code such as the following:
-
-```text
-if not self.env.context.get('todo_task_writing'):
-    self.with_context(todo_task_writing=True).write(some_values)
-```
-    
-With this technique, our specific logic is guarded by an `if` statement, and runs only if a specific marker is not found in the context. 
-
-Furthermore, our `self.write()` operations should use `with_context` to set that marker. 
-
-This combination ensures that the custom login inside the `if` statement runs only once, and is not triggered on further `write()` calls, avoiding the infinite loop.
-
-
 
 
 ### Field Attributes
@@ -1350,7 +1167,12 @@ should be used to set default values on the target view, to be used on new recor
 ##### `help`
 adds a help tooltip displayed when the mouse pointer is over the button.
 
-### ORM query
+
+### ORM built-in methods
+
+Basic methods provided by the ORM, used mainly to perform CRUD(create, read, update and delete) operations on our model data.
+
+#### Read using `search()` and `browse()`.
 
 #### `search_count`
 
@@ -1364,6 +1186,178 @@ for task in self:
 
 This method return count total.
 
+##### RPC method
+    
+###### `read([fields])` 
 
+is similar to the `browse` method, but, instead of a recordset, it returns a list of rows of data with the fields given as its argument. 
+    
+Each row is a dictionary. 
+
+It provides a serialized representation of the data that can be sent through RPC protocols and is intended to be used by client programs and not in server logic.
+    
+###### `search_read([domain], [fields], offset=0, limit=None, order=None)` 
+
+performs a search operation followed by a read on the resulting record list. 
+    
+It is intended to be used by RPC clients and saves them the extra round trip needed when doing a search followed by a read on the results.
+
+##### Import and Export method    
+    
+###### `load([fields], [data])` 
+
+is used to import data acquired from a CSV file. 
+    
+The first argument is the list of fields to import, and it maps directly to a CSV top row.
+
+The second argument is a list of records, where each record is a list of string values to parse and import, and it maps directly to the CSV data rows and columns.
+     
+It implements the features of CSV data import, such as the external identifiers support. 
+ 
+It is used by the web client `Import` feature.
+     
+###### `export_data([fields], raw_data=False)` 
+
+is used by the web client Export function. 
+    
+It returns a dictionary with a data key containing the data: a list of rows.
+
+The field names can use the `.id` and `/id` suffixes used in CSV files, and the data is in a format compatible with an importable CSV file.
+
+The optional `raw_data` argument allows for data values to be exported with their Python types, instead
+of the string representation used in CSV.
+
+##### Methods for the user interface
+
+###### `name_get()` 
+
+returns a list of (ID, name) tuples with the text representing each record. 
+    
+It is used by default for computing the `display_name` value, providing the text representation of relation fields. 
+    
+It can be extended to implement custom display representations, such as displaying the record code and name instead of only the name.
+    
+###### `name_search(name='', args=None, limit=100)` 
+
+returns a list of `(ID, name)` tuples, where the display name matches the text in the `name` argument. 
+    
+It is used in the UI while typing in a relation field to produce the list with the suggested records matching the typed text. 
+
+For example, it is used to implement product lookup both by name and by reference, while typing in a field to pick a product.
+    
+###### `name_create(name)` 
+
+creates a new record with only the title name to use for it.
+    
+It is used in the UI for the "quick-create" feature, where you can quickly create a related record by just providing its name. 
+
+It can be extended to provide specific defaults for the new records created through this feature.
+    
+###### `default_get([fields])` 
+
+returns a dictionary with the default values for a new record to be created. 
+    
+The default values may depend on variables such as the current user or the session context.
+    
+###### `fields_get()` 
+
+is used to describe the model's field definitions, as seen in the `View Fields` option of the developer menu.
+    
+###### `fields_view_get()` 
+
+is used by the web client to retrieve the structure of the UI view to render. 
+    
+It can be given the ID of the view as an argument or the type of view we want using `view_type='form'`.
+ 
+For example, you may try this:  `self.fields_view_get(view_type='tree')`. 
+ 
+#### Write
+
+The ORM provides three methods for the three basic write operations:
+
+##### create
+ 
+ `<Model>.create(values)` creates a new record on the model. Returns the created record.
+    
+##### write
+
+`<Recordset>.write(values)` updates field values on the recordset. Returns nothing.
+    
+##### unlink
+
+`<Recordset>.unlink()` deletes the records from the database. Returns nothing.
+
+The `values` argument is a dictionary, mapping field names to values to write.
+
+In some cases, we need to extend these methods to add some business logic to be triggered whenever these actions are executed. 
+
+By placing our logic in the appropriate section of the custom method, we can have the code run before or after the main operations are executed.
+
+```text
+@api.model
+    def create(self, vals):
+        # Code before create: should use the `vals` dict
+        new_record = super(TodoTask, self).create(vals)
+        # Code after create: can use the `new_record` created
+        return new_record
+```
+
+A custom `write()` would follow this structure:
+
+```text
+@api.multi
+def write(self, vals): 
+    #can use `self`, with the old values
+    super(TodoTask, self).write(vals)
+    # Code after write: can use `self`, with the updated values
+    return True
+```
+While extending `create()` and `write()` opens up a lot of possibilities, remember in many
+cases we don't need to do that, since there are tools also available that may be better suited:
+
+For field values that are automatically calculated based on other fields, we should use computed fields. 
+
+An example of this is to calculate a header total when the values of the lines are changed.
+
+- To have field default values calculated dynamically, we can use a field default bound to a function instead of a fixed value.
+
+- To have values set on other fields when a field is changed, we can use `onchange` functions.
+
+An example of this is when picking a customer, setting their currency as the document's currency that can later be manually changed by the user. 
+Keep in mind that `onchange` only works on form view interaction and not on direct write calls.
+
+- For validations, we should use constraint functions decorated with `@api.constraints(fld1,fld2,...)`. 
+
+These are like computed fields but, instead of computing values, they are expected to raise errors.
+
+Consider carefully if you really need to use extensions to the `create` or `write` methods.
+
+In most cases, we just need to perform some validation or automatically compute some value, when the record is saved. 
+
+But we have better tools for this: validations are best implemented with `@api.constrains` methods, and automatic calculations are better implemented as computed fields. 
+
+In this case, we need to compute field values when saving.
+
+If, for some reason, computed fields are not a valid solution, the best approach is to have our logic at the top of the method, accumulating the changes needed into the `vals` dictionary that will be passed to the final `super()` call.
+
+
+For the `write()` method, having further write operations on the same model will lead to a recursion loop and end with an error when the worker process resources are exhausted.
+
+Please consider if this is really needed. 
+
+If it is, a technique to avoid the recursion loop is to set a flag in the context. 
+
+For example, we could add code such as the following:
+
+```text
+if not self.env.context.get('todo_task_writing'):
+    self.with_context(todo_task_writing=True).write(some_values)
+```
+    
+With this technique, our specific logic is guarded by an `if` statement, and runs only if a specific marker is not found in the context. 
+
+Furthermore, our `self.write()` operations should use `with_context` to set that marker. 
+
+This combination ensures that the custom login inside the `if` statement runs only once, and is not triggered on further `write()` calls, avoiding the infinite loop.
 
 
