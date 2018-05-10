@@ -1067,4 +1067,262 @@ Through the delegation mechanism, all fields from the inherited model and partne
  
  Note that with delegation inheritance, fields are inherited but methods are not.
 
+### Views
+
+#### Field Dynamic attributes
+Some attributes allow us to dynamically change the display of view elements, depending on
+the record's values.
+
+##### `groups` 
+can make an element visible depending on the security groups the current user belongs to. 
+
+Only the members of the specified groups will see it. It expects a comma-separated list of Group XML IDs.
+
+##### `states` 
+
+can make an element visible depending on the record's State field. It expects a comma-separated list of State values, and only works on models with an actual state field.
+
+##### `attrs` 
+special attribute, expecting as a value a dictionary that maps the value of the invisible attribute to the result of an expression.
+
+For example, to have the `date_deadline` field visible in all states except `draft`, use the
+following code:
+
+`<field name="date_deadline" attrs="{'invisible':[('state', '=', ['draft'])]}"/>`
+
+* `invisible` 
+attribute is available in any element, not only fields. 
+For example, we can use it on notebook pages and in `group` elements.
+
+* `readonly` and `required`. 
+These only make sense for data fields to make them not editable or mandatory. This allows us to implement some basic client-side logic, such as making a field mandatory depending on other record values, such as the State.
+
+#### Field Widgets
+For text fields, we have the following widgets:
+
+##### `email` 
+is used to make the email text an actionable "mail-to" address.
+##### `url` 
+is used to format the text as a clickable URL.
+##### `html` 
+is used to render the text as HTML content; in edit mode, it features a WYSIWYG editor to allow for the formatting of the content without the need for using the HTML syntax.
+
+For numeric fields, we have the following widgets :
+
+##### `handle` 
+is specifically designed for sequence fields in list views and displays a handle that allows you to drag lines to a custom order.
+##### `float_time`
+formats a float field with time quantities as hours and minutes.
+##### `monetary`
+displays a float field as the currency amount. 
+It expects a `currency_id` companion field, but another field name can be provided with `options="{'currency_field': 'currency_id'}"`.
+##### `progressbar`
+presents a float as a progress percentage and can be useful for fields representing a completion rate.
+
+For relational and selection fields, we have these additional widgets:
+
+##### `many2many_tags`
+displays values as a list of button-like labels.
+
+##### `selection`
+uses the selection field widget for a many-to-one field.
+
+##### `radio`
+displays the selection field options using radio buttons.
+
+##### `priority`
+represents the selection field as a list of clickable stars. The selection options are usually numeric digits.
+
+##### `state_selection`
+shows a semaphore light for the kanban state selection list.
+The normal state is represented in gray, done is represented in green, and any other state is represented in red.
+
+The `state_selection` widget was introduced in Odoo 11, and replaces
+the former `kanban_state_selection`. The later one is deprecated, but for backward compatibility it is still supported.
+
+#### Tree Attributes
+
+##### `decoration–NAME`
+
+The row text color and font can change dynamically depending on the results of a Python
+expression evaluation.
+
+The `NAME` part can be `bf` or `it`, for bold and italic fonts, or any Bootstrap text contextual colors: `danger`, `info`, `muted`, `primary`, `success`, or `warning`. The Bootstrap  documentation has examples of how these are presented: `http://getbootstrap.com/css/#helper-classes-colors`.
+
+Remember that fields used in expressions must be declared in a `<field>` element, so that
+the web client knows that that column needs to be retrieved from the server. 
+If we don't want to have it displayed to the user, we should use the `invisible="1"` attribute on it.
+
+In this example below we using expression from field `state` so this field must be present on views but invisible.
+
+```textmate
+<tree decoration-muted="is_done"
+      decoration-bf="state=='open'"
+      delete="false">
+      <field name="name"/>
+      <field name="user_id"/>
+      <field name="is_done"/>
+      <field name="state" invisible="1"/>
+    </tree>
+```
+
+Other relevant attributes of the tree element are:
+
+##### `default_order` 
+allows us to override the model's default `sort` order, and its value follows the same format as an order attribute used in model definitions.
+
+##### `create`, `delete`, and `edit`,
+if set to `false` (in lowercase), disable the corresponding action on the list view.
+
+##### `editable`
+makes records editable directly on the list view. 
+
+Possible values are `top` and `bottom`, the location where the new records will be added.
+
+A list view can contain fields and buttons, and most of their attributes for forms are also
+valid here.
+
+
+#### Buttons
+
+Buttons support these attributes:
+
+##### `string`
+is the button text label, or the HTML alt text when an icon is used.
+##### `type`
+is the type of the action to perform. Possible values are:
+* `object` is used for calling a Python method 
+* `action` is used to run a window action 
+
+##### `name` 
+identifies the specific action to perform, according to the chosen type: either a model method name or the database ID of window action to run. 
+
+The `%(xmlid)d` formula can be used to translate the XML ID into the required Database ID when the view is being loaded.
+
+##### `args` 
+is used when the `type` is `object`, to pass additional parameters to the method, which must be purely static JSON parameters appended to the record ID to form the arguments of the method call.
+
+##### `context`
+adds values to the context, which can have an effect after the windows action is run, or in the Python code methods called.
+
+##### `confirm`
+displays a confirmation message box before running the related action, displaying the text assigned to this attribute.
+
+##### `special="cancel"`
+is used on wizard form, to add a Cancel button.
+
+##### `icon`
+is for the icon image to be shown in the button. The icons available are from the Font Awesome set and should be specified using the corresponding CSS class, such as `icon="fa-question"`. For more information, refer to `http://fontawesome.io`.
+
+#### Smart buttons
+
+When designing the form structure, we included a top-right area to contain smart buttons.
+
+Let's now add a button inside it.
+
+Example : button displaying the total number of To-Do tasks for the  owner of the current To-Do task, and clicking on it will navigate to the list of those items.
+
+In views we have code
+
+```text
+<sheet>
+        <!-- To add form content -->
+        <div name="button_box" class="oe_button_box">
+          <!-- Smart buttons will go here... -->
+            <div name="button_box" class="oe_button_box">
+            <button class="oe_stat_button"
+                type="action" icon="fa-tasks"
+                name="%(action_todo_task_button)d"
+                context="{'default_user_id': user_id}"
+                help="All to-dos for this user" >
+                <field string="To-Dos" name="user_todo_count"
+                widget="statinfo"/>
+            </button>
+            </div>
+        </div>
+```
+
+In models, we have code 
+
+```text
+# Ch09 Views - Smart Buttons
+    def _compute_user_todo_count(self):
+        for task in self:
+            task.user_todo_count = task.search_count(
+                [('user_id', '=', task.user_id.id)])
+
+    user_todo_count = fields.Integer(
+        'User To-Do Count',
+        compute='_compute_user_todo_count')
+```
+This button displays the total number of To-Do Tasks for the person responsible for this To-Do task, computed by the `user_todo_count` field.
+
+
+The button element above itself is a container, with fields displaying statistics. 
+These statistics are regular fields using the widget `statinfo`. 
+The field is usually a computed field defined in the underlying model. 
+
+Other than fields, inside a button we can also use static text, such as `<div>User's To-dos</div>`.
+
+When clicking on the button,we want to see a list with only the Tasks for the current
+responsible user. 
+For that, we use the button's context attribute to store that value.
+
+That will be done via the `action_todo_task_button` action. But it needs to know the current responsible user to be able to perform the filtering. 
+
+The Action used must be defined before the Form, so we should add it at the top of the
+XML file:
+
+```textmate
+<act_window id="action_todo_task_button"
+  name="To-Do Tasks"
+  res_model="todo.task"
+  view_mode="tree,form,calendar,graph,pivot"
+  domain="[('user_id','=',default_user_id)]" />  
+```
+
+Notice how we use the `default_user_id` context key for the domain filter. This particular key will also set the default value on the `user_id` field when creating new Tasks after following the button link.
+
+
+
+These are the attributes that we can use when adding smart buttons:
+
+##### `class="oe_stat_button"`
+renders a rectangle instead of a regular button.
+
+##### `icon`
+sets the icon to use, chosen from the Font Awesome set. Visit `http://fontawesome.io` to browse the available icons.
+
+##### `type` and `name`
+are the button type and the name of the action to trigger. 
+For smart buttons, the type will usually be action for a window action, and name will be the ID of the action to execute.
+ It expects an actual database ID, so we have to use a formula to convert an XML ID into a database ID: "`%(actionxmlid)d`". 
+ This action should open a view with the related records.
+ 
+##### `string`
+adds label text to the button. 
+We have not used it here because the contained field already provides a text for it.
+
+##### `context` 
+should be used to set default values on the target view, to be used on new records created on the view after clicking on the button.
+
+##### `help`
+adds a help tooltip displayed when the mouse pointer is over the button.
+
+### ORM query
+
+#### `search_count`
+
+Example in model 
+
+```text
+for task in self:
+    task.user_todo_count = task.search_count(
+        [('user_id', '=', task.user_id.id)])
+```
+
+This method return count total.
+
+
+
 

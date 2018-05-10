@@ -1,0 +1,207 @@
+<odoo>
+    <data>
+
+        <!-- Match Detail Form -->
+
+        <record model="ir.ui.view" id="generation.match_detail_form">
+            <field name="name">generation.match_detail.form</field>
+            <field name="model">generation.match_detail</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="player_id"/>
+                        <field name="action"/>
+                        <field name="time"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Match Detail List -->
+
+        <record model="ir.ui.view" id="generation.match_detail_view">
+            <field name="name">generation.match_detail.view</field>
+            <field name="model">generation.match_detail</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="player_id"/>
+                    <field name="match_id"/>
+                    <field name="action"/>
+                    <field name="time"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Stadium Form -->
+
+        <record model="ir.ui.view" id="generation.stadium_form">
+            <field name="name">generation.stadium.form</field>
+            <field name="model">generation.stadium</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Stadium List -->
+
+        <record model="ir.ui.view" id="generation.stadium_view">
+            <field name="name">generation.stadium.view</field>
+            <field name="model">generation.stadium</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- League Form -->
+
+        <record model="ir.ui.view" id="generation.league_form">
+            <field name="name">generation.league.form</field>
+            <field name="model">generation.league</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Leaguge List -->
+
+        <record model="ir.ui.view" id="generation.league_view">
+            <field name="name">generation.league.view</field>
+            <field name="model">generation.league</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Season Form -->
+
+        <record model="ir.ui.view" id="generation.season_form">
+            <field name="name">generation.season.form</field>
+            <field name="model">generation.season</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- season List -->
+
+        <record model="ir.ui.view" id="generation.season_view">
+            <field name="name">generation.season.view</field>
+            <field name="model">generation.season</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- Club Form -->
+
+        <record model="ir.ui.view" id="generation.club_form">
+            <field name="name">generation.club.form</field>
+            <field name="model">generation.club</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="stadium_id"/>
+                        <field name="active"/>
+                        <field name="image"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- club List -->
+
+        <record model="ir.ui.view" id="generation.club_view">
+            <field name="name">generation.club.view</field>
+            <field name="model">generation.club</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="stadium_id"/>
+                    <field name="active"/>
+                    <field name="image"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+        <!-- Player Form -->
+
+        <record model="ir.ui.view" id="generation.player_form">
+            <field name="name">generation.player.form</field>
+            <field name="model">generation.player</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                        <field name="image"/>
+                    </group>
+                    <group>
+                        <field name="position_id"/>
+                        <field name="club_id"/>
+                    </group>
+                    <group>
+                        <field name="dob"/>
+                        <field name="country_id"/>
+                        <field name="height"/>
+                        <field name="weight"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Player List -->
+
+        <record model="ir.ui.view" id="generation.player_view">
+            <field name="name">generation.player.view</field>
+            <field name="model">generation.player</field>
+            <field name="arch" type="xml">
+                <tree decoration-muted="active">
+
+                        <field name="name"/>
+                        <field name="active"/>
+                        <field name="image" widget=""/>
+
+
+                        <field name="position_id"/>
+                        <field name="club_id"/>
+
+
+                        <field name="dob"/>
+                        <field name="country_id"/>
+                        <field name="height"/>
+                        <field name="weight"/>
+
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

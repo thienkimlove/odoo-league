@@ -16,13 +16,79 @@
     -->
 
     <!-- actions opening views on models -->
-    <!--
-    <record model="ir.actions.act_window" id="generation.action_window">
-      <field name="name">generation window</field>
-      <field name="res_model">generation.generation</field>
+
+
+
+    <record model="ir.actions.act_window" id="generation.stadium_action_window">
+      <field name="name">Stadium</field>
+      <field name="res_model">generation.stadium</field>
       <field name="view_mode">tree,form</field>
     </record>
-    -->
+
+    <record model="ir.actions.act_window" id="generation.season_action_window">
+      <field name="name">Season</field>
+      <field name="res_model">generation.season</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="generation.league_action_window">
+      <field name="name">League</field>
+      <field name="res_model">generation.league</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="generation.position_action_window">
+      <field name="name">Position</field>
+      <field name="res_model">generation.position</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="generation.club_action_window">
+      <field name="name">Club</field>
+      <field name="res_model">generation.club</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="generation.player_action_window">
+      <field name="name">Player</field>
+      <field name="res_model">generation.player</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <record model="ir.actions.act_window" id="generation.referee_action_window">
+      <field name="name">Referee</field>
+      <field name="res_model">generation.referee</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="generation.coach_action_window">
+      <field name="name">generation window</field>
+      <field name="res_model">generation.coach</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="generation.match_action_window">
+      <field name="name">Match</field>
+      <field name="res_model">generation.match</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+      <record model="ir.actions.act_window" id="generation.match_detail_action_window">
+          <field name="name">Detail</field>
+          <field name="res_model">generation.match_detail</field>
+          <field name="view_mode">tree,form</field>
+      </record>
+
+
+    <record model="ir.actions.act_window" id="generation.post_action_window">
+      <field name="name">Post</field>
+      <field name="res_model">generation.post</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
 
     <!-- server action to the one above -->
     <!--
@@ -41,18 +107,29 @@
     -->
 
     <!-- Top menu item -->
-    <!--
-    <menuitem name="generation" id="generation.menu_root"/>
-    -->
+
+    <menuitem name="Generation" id="generation.menu_root"/>
+
     <!-- menu categories -->
-    <!--
-    <menuitem name="Menu 1" id="generation.menu_1" parent="generation.menu_root"/>
-    <menuitem name="Menu 2" id="generation.menu_2" parent="generation.menu_root"/>
-    -->
+
+    <menuitem name="Stadium" id="generation.stadium" parent="generation.menu_root" action="generation.stadium_action_window" />
+    <menuitem name="Season" id="generation.season" parent="generation.menu_root"  action="generation.season_action_window" />
+    <menuitem name="League" id="generation.league" parent="generation.menu_root"  action="generation.league_action_window" />
+    <menuitem name="Position" id="generation.position" parent="generation.menu_root"  action="generation.position_action_window" />
+    <menuitem name="Club" id="generation.club" parent="generation.menu_root"  action="generation.club_action_window" />
+    <menuitem name="Player" id="generation.player" parent="generation.menu_root"  action="generation.player_action_window" />
+    <menuitem name="Referee" id="generation.referee" parent="generation.menu_root"  action="generation.referee_action_window" />
+    <menuitem name="Coach" id="generation.coach" parent="generation.menu_root"  action="generation.coach_action_window" />
+    <menuitem name="Match" id="generation.match" parent="generation.menu_root"  action="generation.match_action_window" />
+
+      <menuitem name="Match Detail" id="generation.match_detail" parent="generation.menu_root"  action="generation.match_detail_action_window" />
+
+    <menuitem name="Post" id="generation.post" parent="generation.menu_root"  action="generation.post_action_window" />
+
     <!-- actions -->
     <!--
     <menuitem name="List" id="generation.menu_1_list" parent="generation.menu_1"
-              action="generation.action_window"/>
+              action="generation_action_window"/>
     <menuitem name="Server to list" id="generation" parent="generation.menu_2"
               action="generation.action_server"/>
     -->

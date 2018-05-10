@@ -41,5 +41,5 @@ setup/win32/static/postgresql*.exe
 /odoo/
 .idea
 odoo.log
-.odoorc
+odoorc
 /node_modules/
