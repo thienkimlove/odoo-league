@@ -6,7 +6,27 @@ db_host = False
 db_name = league_debug
 db_password = tieungao123
 db_user = tieungao
-data_dir = ~/.local/share/odoo_league
+
+#Change the data directory
+data_dir = /var/www/html/odoo_league/filestore
 without_demo = all
-workers = 0
-logfile = /var/www/html/new_odoo/odoo.log
+
+
+#Configure the logging handlers
+
+logfile = /var/www/html/odoo_league/odoo.log
+logrotate = True
+log_level = warn
+log_handler = :WARNING,werkzeug:CRITICAL,odoo.service.server:INFO
+
+#Configure Odoo to run with workers:
+workers = 4
+# limit_memory_hard: 4GB
+limit_memory_hard = 4294967296
+# limit_memory_soft: 640MB
+limit_memory_soft = 671088640
+limit_request = 8192
+limit_time_cpu = 120
+limit_time_real = 300
+#Only listen on the local network interface
+http_interface = 127.0.0.1

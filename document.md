@@ -1610,5 +1610,16 @@ class FooBarController(http.Controller):
             return http.request.render('my.error_page')
 ```
 
+### Backups
+At the very least, you should have the cron task on the server running a daily backup. 
+ 
+A simple and basic solution is to edit the `crontab` file as root by running `crontab -e` and to add the following lines:
+
+```textmate
+@daily su postgres -c pg_dumpall | gzip > /backups/postgresql-$(date +%u).dump.gz
+@daily tar czf /backups/odoo-filestore-$(date +%u).tgz /home/odoo/odoo-prod/project/filestore
+```
+
+Don't forget to create the `/backups` directory.
 
 
