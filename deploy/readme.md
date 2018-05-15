@@ -44,7 +44,13 @@
 
 `ln -s /var/www/html/odoo_league/deploy/odoo.service /lib/systemd/system/odoo.service`
 
-`chmod +x /var/www/html/odoo_league/deploy/start-odoo.sh`
+`chmod +x /var/www/html/odoo_league/deploy/start-odoo`
 
 `systemctl enable odoo.service`
+
+`service odoo start`
+
+`service odoo status` to check
+
+`ln -s /var/www/html/odoo_league/deploy/odoo.antim.vn /etc/nginx/sites-enabled/odoo.antim.vn`
 

@@ -14,10 +14,14 @@ without_demo = all
 
 #Configure the logging handlers
 
+list_db = False
+log_db = True
+log_db_level = debug
+log_handler = :DEBUG
+log_level = debug
+
 logfile = /var/www/html/odoo_league/odoo.log
 logrotate = True
-log_level = warn
-log_handler = :WARNING,werkzeug:CRITICAL,odoo.service.server:INFO
 
 #Configure Odoo to run with workers (only work with --log-file=syslog)
 workers = 0
