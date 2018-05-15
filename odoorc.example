@@ -9,3 +9,4 @@ db_user = tieungao
 data_dir = ~/.local/share/odoo_league
 without_demo = all
 workers = 0
+logfile = /var/www/html/new_odoo/odoo.log
