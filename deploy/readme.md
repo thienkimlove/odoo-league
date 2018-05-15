@@ -12,6 +12,8 @@
 
 `\list` for database checking
 
+`mkvirtualenv odoo_league`
+
 `pip install -r odoo/requirements.txt`
 
 `pip install -r watchdog`
@@ -39,4 +41,10 @@
 `service postgresql restart`
 
 `./odoo/odoo-bin -c odoorc` for checking first time.
+
+`ln -s /var/www/html/odoo_league/deploy/odoo.service /lib/systemd/system/odoo.service`
+
+`chmod +x /var/www/html/odoo_league/deploy/start-odoo.sh`
+
+`systemctl enable odoo.service`
 

@@ -19,8 +19,8 @@ logrotate = True
 log_level = warn
 log_handler = :WARNING,werkzeug:CRITICAL,odoo.service.server:INFO
 
-#Configure Odoo to run with workers:
-workers = 4
+#Configure Odoo to run with workers (only work with --log-file=syslog)
+workers = 0
 # limit_memory_hard: 4GB
 limit_memory_hard = 4294967296
 # limit_memory_soft: 640MB
@@ -28,5 +28,6 @@ limit_memory_soft = 671088640
 limit_request = 8192
 limit_time_cpu = 120
 limit_time_real = 300
+
 #Only listen on the local network interface
 http_interface = 127.0.0.1
