@@ -56,7 +56,6 @@
     </record>
 
 
-
     <record model="ir.actions.act_window" id="generation.referee_action_window">
       <field name="name">Referee</field>
       <field name="res_model">generation.referee</field>
@@ -75,11 +74,11 @@
       <field name="view_mode">tree,form</field>
     </record>
 
-      <record model="ir.actions.act_window" id="generation.match_detail_action_window">
-          <field name="name">Detail</field>
-          <field name="res_model">generation.match_detail</field>
-          <field name="view_mode">tree,form</field>
-      </record>
+    <record model="ir.actions.act_window" id="generation.match_detail_action_window">
+      <field name="name">Detail</field>
+      <field name="res_model">generation.match_detail</field>
+      <field name="view_mode">tree,form</field>
+    </record>
 
 
     <record model="ir.actions.act_window" id="generation.post_action_window">
@@ -88,6 +87,18 @@
       <field name="view_mode">tree,form</field>
     </record>
 
+
+    <record model="ir.actions.act_window" id="generation.history_action_window">
+      <field name="name">Lịch sử thi đấu</field>
+      <field name="res_model">generation.history</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="generation.match_event_action_window">
+      <field name="name">Sự kiện trong trận đấu</field>
+      <field name="res_model">generation.match_event</field>
+      <field name="view_mode">tree,form</field>
+    </record>
 
 
     <!-- server action to the one above -->
@@ -108,23 +119,34 @@
 
     <!-- Top menu item -->
 
-    <menuitem name="Generation" id="generation.menu_root"/>
+    <menuitem name="Football" id="generation.menu_root"/>
 
     <!-- menu categories -->
 
-    <menuitem name="Stadium" id="generation.stadium" parent="generation.menu_root" action="generation.stadium_action_window" />
-    <menuitem name="Season" id="generation.season" parent="generation.menu_root"  action="generation.season_action_window" />
-    <menuitem name="League" id="generation.league" parent="generation.menu_root"  action="generation.league_action_window" />
-    <menuitem name="Position" id="generation.position" parent="generation.menu_root"  action="generation.position_action_window" />
-    <menuitem name="Club" id="generation.club" parent="generation.menu_root"  action="generation.club_action_window" />
-    <menuitem name="Player" id="generation.player" parent="generation.menu_root"  action="generation.player_action_window" />
-    <menuitem name="Referee" id="generation.referee" parent="generation.menu_root"  action="generation.referee_action_window" />
-    <menuitem name="Coach" id="generation.coach" parent="generation.menu_root"  action="generation.coach_action_window" />
-    <menuitem name="Match" id="generation.match" parent="generation.menu_root"  action="generation.match_action_window" />
+    <menuitem name="Sân vận động" id="generation.stadium" parent="generation.menu_root" action="generation.stadium_action_window" />
+    <menuitem name="Mùa" id="generation.season" parent="generation.menu_root"  action="generation.season_action_window" />
+    <menuitem name="Giải đấu" id="generation.league" parent="generation.menu_root"  action="generation.league_action_window" />
+    <menuitem name="Vị trí" id="generation.position" parent="generation.menu_root"  action="generation.position_action_window" />
 
-      <menuitem name="Match Detail" id="generation.match_detail" parent="generation.menu_root"  action="generation.match_detail_action_window" />
+    <menuitem name="Các sự kiện trong trận đấu" id="generation.match_event" parent="generation.menu_root"  action="" />
 
-    <menuitem name="Post" id="generation.post" parent="generation.menu_root"  action="generation.post_action_window" />
+
+    <menuitem name="Câu lạc bộ" id="generation.club" parent="generation.menu_root"  action="generation.club_action_window" />
+    <menuitem name="Cầu thủ" id="generation.player" parent="generation.menu_root"  action="generation.player_action_window" />
+
+
+    <menuitem name="Trọng tài" id="generation.referee" parent="generation.menu_root"  action="generation.referee_action_window" />
+    <menuitem name="Huấn luyện viên" id="generation.coach" parent="generation.menu_root"  action="generation.coach_action_window" />
+    <menuitem name="Trận đấu" id="generation.match" parent="generation.menu_root"  action="generation.match_action_window" />
+
+    <!--<menuitem name="Chi tiết trận đấu" id="generation.match_detail" parent="generation.menu_root"  action="generation.match_detail_action_window" />-->
+
+    <menuitem name="Bài viết" id="generation.post" parent="generation.menu_root"  action="generation.post_action_window" />
+
+
+    <menuitem name="Lịch sử thi đấu" id="generation.history" parent="generation.menu_root"  action="generation.history_action_window" />
+
+
 
     <!-- actions -->
     <!--

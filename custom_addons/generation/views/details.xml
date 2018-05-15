@@ -9,9 +9,9 @@
             <field name="arch" type="xml">
                 <form>
                     <group>
-                        <field name="player_id"/>
-                        <field name="action"/>
-                        <field name="time"/>
+                        <field name="player_id" string="Tên cầu thủ"/>
+                        <field name="match_event_id" string="Sự kiện"/>
+                        <field name="time" string="Xảy ra vào"/>
                     </group>
                 </form>
             </field>
@@ -24,10 +24,9 @@
             <field name="model">generation.match_detail</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="player_id"/>
-                    <field name="match_id"/>
-                    <field name="action"/>
-                    <field name="time"/>
+                    <field name="player_id" string="Tên cầu thủ"/>
+                    <field name="match_event_id" string="Sự kiện"/>
+                    <field name="time" string="Xảy ra vào"/>
                 </tree>
             </field>
         </record>
@@ -40,8 +39,8 @@
             <field name="arch" type="xml">
                 <form>
                     <group>
-                        <field name="name"/>
-                        <field name="active"/>
+                        <field name="name" string="Tên"/>
+                        <field name="active" string="Trạng thái" />
                     </group>
                 </form>
             </field>
@@ -53,12 +52,43 @@
             <field name="name">generation.stadium.view</field>
             <field name="model">generation.stadium</field>
             <field name="arch" type="xml">
-                <tree>
-                    <field name="name"/>
-                    <field name="active"/>
+                <tree decoration-muted="active">
+                    <field name="name" string="Tên"/>
+                    <field name="active" string="Trạng thái" />
                 </tree>
             </field>
         </record>
+
+
+
+        <!-- match_event Form -->
+
+        <record model="ir.ui.view" id="generation.match_event_form">
+            <field name="name">generation.match_event.form</field>
+            <field name="model">generation.match_event</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name" string="Tên"/>
+                        <field name="active" string="Trạng thái" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- match_event List -->
+
+        <record model="ir.ui.view" id="generation.match_event_view">
+            <field name="name">generation.match_event.view</field>
+            <field name="model">generation.match_event</field>
+            <field name="arch" type="xml">
+                <tree decoration-muted="active">
+                    <field name="name" string="Tên"/>
+                    <field name="active" string="Trạng thái" />
+                </tree>
+            </field>
+        </record>
+
 
         <!-- League Form -->
 
@@ -68,8 +98,9 @@
             <field name="arch" type="xml">
                 <form>
                     <group>
-                        <field name="name"/>
-                        <field name="active"/>
+                        <field name="name" string="Tên"/>
+                        <field name="season_id" string="Mùa giải"/>
+                        <field name="active" string="Trạng thái" />
                     </group>
                 </form>
             </field>
@@ -81,9 +112,10 @@
             <field name="name">generation.league.view</field>
             <field name="model">generation.league</field>
             <field name="arch" type="xml">
-                <tree>
-                    <field name="name"/>
-                    <field name="active"/>
+                <tree decoration-muted="active">
+                    <field name="name" string="Tên"/>
+                    <field name="season_id" string="Mùa giải"/>
+                    <field name="active" string="Trạng thái" />
                 </tree>
             </field>
         </record>
@@ -96,8 +128,8 @@
             <field name="arch" type="xml">
                 <form>
                     <group>
-                        <field name="name"/>
-                        <field name="active"/>
+                        <field name="name" string="Tên"/>
+                        <field name="active" string="Trạng thái" />
                     </group>
                 </form>
             </field>
@@ -109,9 +141,9 @@
             <field name="name">generation.season.view</field>
             <field name="model">generation.season</field>
             <field name="arch" type="xml">
-                <tree>
-                    <field name="name"/>
-                    <field name="active"/>
+                <tree decoration-muted="active">
+                    <field name="name" string="Tên"/>
+                    <field name="active" string="Trạng thái" />
                 </tree>
             </field>
         </record>
@@ -125,10 +157,10 @@
             <field name="arch" type="xml">
                 <form>
                     <group>
-                        <field name="name"/>
-                        <field name="stadium_id"/>
-                        <field name="active"/>
-                        <field name="image"/>
+                        <field name="name" string="Tên"/>
+                        <field name="stadium_id" string="Sân vận động"/>
+                        <field name="active" string="Trạng thái"/>
+                        <field name="image" widget="image" string="Ảnh đại diện" />
                     </group>
                 </form>
             </field>
@@ -140,11 +172,11 @@
             <field name="name">generation.club.view</field>
             <field name="model">generation.club</field>
             <field name="arch" type="xml">
-                <tree>
-                    <field name="name"/>
-                    <field name="stadium_id"/>
-                    <field name="active"/>
-                    <field name="image"/>
+                <tree decoration-muted="active">
+                    <field name="name" string="Tên"/>
+                    <field name="stadium_id" string="Sân vận động"/>
+                    <field name="active" string="Trạng thái"/>
+                    <field name="image" widget="image" string="Ảnh đại diện" />
                 </tree>
             </field>
         </record>
@@ -159,19 +191,19 @@
             <field name="arch" type="xml">
                 <form>
                     <group>
-                        <field name="name"/>
-                        <field name="active"/>
-                        <field name="image"/>
+                        <field name="name" string="Tên"/>
+                        <field name="active" string="Trạng thái" />
+                        <field name="image" widget="image" string="Ảnh đại diện" />
                     </group>
                     <group>
-                        <field name="position_id"/>
-                        <field name="club_id"/>
+                        <field name="club_id" string="Câu lạc bộ" />
+                        <field name="club_join_date" string="Ngày gia nhập" />
                     </group>
                     <group>
-                        <field name="dob"/>
-                        <field name="country_id"/>
-                        <field name="height"/>
-                        <field name="weight"/>
+                        <field name="dob" string="Ngày sinh"/>
+                        <field name="country_id" string="Quốc tịch"/>
+                        <field name="height" string="Chiều cao(cm)"/>
+                        <field name="weight" string="Cân nặng (kg)" />
                     </group>
                 </form>
             </field>
@@ -185,23 +217,251 @@
             <field name="arch" type="xml">
                 <tree decoration-muted="active">
 
-                        <field name="name"/>
-                        <field name="active"/>
-                        <field name="image" widget=""/>
-
-
-                        <field name="position_id"/>
-                        <field name="club_id"/>
-
-
-                        <field name="dob"/>
-                        <field name="country_id"/>
-                        <field name="height"/>
-                        <field name="weight"/>
+                    <field name="name" string="Tên" />
+                    <field name="image" widget="image" string="Ảnh đại diện"/>
+                    <field name="club_id" string="Câu lạc bộ" />
+                    <field name="club_join_date" string="Ngày gia nhập" />
+                    <field name="dob" string="Ngày sinh"/>
+                    <field name="country_id" string="Quốc tịch" />
+                    <field name="height" string="Chiều cao (cm)" />
+                    <field name="weight" string="Cân nặng (kg)"/>
+                    <field name="active" string="Trạng thái" />
 
                 </tree>
             </field>
         </record>
+
+
+
+
+
+        <!-- Coach Form -->
+
+        <record model="ir.ui.view" id="generation.coach_form">
+            <field name="name">generation.coach.form</field>
+            <field name="model">generation.coach</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name" string="Tên"/>
+                        <field name="active" string="Trạng thái" />
+                        <field name="image" widget="image" string="Ảnh đại diện" />
+                    </group>
+                    <group>
+                        <field name="club_id" string="Câu lạc bộ" />
+                    </group>
+                    <group>
+                        <field name="dob" string="Ngày sinh"/>
+                        <field name="country_id" string="Quốc tịch"/>
+                        <field name="height" string="Chiều cao(cm)"/>
+                        <field name="weight" string="Cân nặng (kg)" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Coach List -->
+
+        <record model="ir.ui.view" id="generation.coach_view">
+            <field name="name">generation.coach.view</field>
+            <field name="model">generation.coach</field>
+            <field name="arch" type="xml">
+                <tree decoration-muted="active">
+
+                    <field name="name" string="Tên" />
+                    <field name="image" widget="image" string="Ảnh đại diện"/>
+                    <field name="club_id" string="Câu lạc bộ" />
+                    <field name="dob" string="Ngày sinh"/>
+                    <field name="country_id" string="Quốc tịch" />
+                    <field name="height" string="Chiều cao (cm)" />
+                    <field name="weight" string="Cân nặng (kg)"/>
+                    <field name="active" string="Trạng thái" />
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <!-- Referee Form -->
+
+        <record model="ir.ui.view" id="generation.referee_form">
+            <field name="name">generation.referee.form</field>
+            <field name="model">generation.referee</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name" string="Tên"/>
+                        <field name="active" string="Trạng thái" />
+                        <field name="image" widget="image" string="Ảnh đại diện" />
+                    </group>
+                    <group>
+                        <field name="dob" string="Ngày sinh"/>
+                        <field name="country_id" string="Quốc tịch"/>
+                        <field name="height" string="Chiều cao(cm)"/>
+                        <field name="weight" string="Cân nặng (kg)" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Referee List -->
+
+        <record model="ir.ui.view" id="generation.referee_view">
+            <field name="name">generation.referee.view</field>
+            <field name="model">generation.referee</field>
+            <field name="arch" type="xml">
+                <tree decoration-muted="active">
+
+                    <field name="name" string="Tên" />
+                    <field name="image" widget="image" string="Ảnh đại diện"/>
+                    <field name="dob" string="Ngày sinh"/>
+                    <field name="country_id" string="Quốc tịch" />
+                    <field name="height" string="Chiều cao (cm)" />
+                    <field name="weight" string="Cân nặng (kg)"/>
+                    <field name="active" string="Trạng thái" />
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <!-- History Form -->
+
+        <record model="ir.ui.view" id="generation.history_form">
+            <field name="name">generation.history.form</field>
+            <field name="model">generation.history</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="player_id" string="Cầu thủ"/>
+                        <field name="club_id" string="Câu lạc bộ"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- History List -->
+
+        <record model="ir.ui.view" id="generation.history_view">
+            <field name="name">generation.history.view</field>
+            <field name="model">generation.history</field>
+            <field name="arch" type="xml">
+                <tree create="false">
+                    <field name="player_id" string="Cầu thủ"/>
+                    <field name="club_id" string="Câu lạc bộ"/>
+                    <field name="club_join_date" string="Ngày gia nhập" />
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- Match Form -->
+
+        <record model="ir.ui.view" id="generation.match_form">
+            <field name="name">generation.match.form</field>
+            <field name="model">generation.match</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group string="Đội">
+                        <field name="home_club_id" string="Đội 1 (nhà)" />
+                        <field name="away_club_id" string="Đội 2 (khách)" />
+                    </group>
+                    <group string="Thông số bắt đầu">
+                        <field name="start_home_player_ids" widget="many2many_tags" string="Đội hình ra sân đội 1" />
+                        <field name="start_away_player_ids" widget="many2many_tags" string="Đội hình ra sân đội 2" />
+                        <field name="referee_id" string="Trọng tài" />
+                        <field name="league_id" string="Giải đấu" />
+                        <field name="stadium_id" string="Sân vận động" />
+                    </group>
+                    <group string="Kết quả">
+                        <field name="start_time" string="Giờ bắt đầu"/>
+                        <field name="end_time" string="Giờ kết thúc"/>
+                        <field name="home_score" string="Tỉ số chung cuộc đội 1"/>
+                        <field name="away_score" string="Tỉ số chung cuộc đội 2"/>
+                    </group>
+
+                    <group>
+                        <field name="match_detail_ids" string="Diễn biến trận đấu" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Player List -->
+
+        <record model="ir.ui.view" id="generation.match_view">
+            <field name="name">generation.match.view</field>
+            <field name="model">generation.match</field>
+            <field name="arch" type="xml">
+                <tree>
+
+                    <field name="name" string="Tên" />
+                    <field name="home_club_id" string="Đội 1 (nhà)" />
+                    <field name="away_club_id" string="Đội 2 (khách)" />
+
+                    <field name="start_home_player_ids" widget="many2many_tags" string="Đội hình ra sân đội 1" />
+                    <field name="start_away_player_ids" widget="many2many_tags" string="Đội hình ra sân đội 2" />
+                    <field name="referee_id" string="Trọng tài" />
+                    <field name="league_id" string="Giải đấu" />
+                    <field name="stadium_id" string="Sân vận động" />
+
+                    <field name="start_time" string="Giờ bắt đầu"/>
+                    <field name="end_time" string="Giờ kết thúc"/>
+                    <field name="home_score" string="Tỉ số chung cuộc đội 1"/>
+                    <field name="away_score" string="Tỉ số chung cuộc đội 2"/>
+
+                    <field name="match_detail_ids" string="Diễn biến trận đấu" />
+
+                </tree>
+            </field>
+        </record>
+
+
+
+        <!-- post Form -->
+
+        <record model="ir.ui.view" id="generation.post_form">
+            <field name="name">generation.post.form</field>
+            <field name="model">generation.post</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name" string="Tên"/>
+                        <field name="image" string="Ảnh bài viết" widget="image"/>
+                        <field name="seo_name" string="SEO Name"/>
+                        <field name="seo_desc" string="SEO Desc"/>
+                        <field name="desc" string="Mô tả"/>
+                        <field name="content" string="Nội dung" widget="html" />
+                        <field name="tag_ids" string="Các từ khóa" widget="many2many_tags" />
+                        <field name="active" string="Is Active?"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- post List -->
+
+        <record model="ir.ui.view" id="generation.post_view">
+            <field name="name">generation.post.view</field>
+            <field name="model">generation.post</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" string="Tên"/>
+                    <field name="image" string="Ảnh bài viết" widget="image"/>
+                    <field name="seo_name" string="SEO Name"/>
+                    <field name="seo_desc" string="SEO Desc"/>
+                    <field name="desc" string="Mô tả"/>
+                    <field name="content" string="Nội dung" widget="html" />
+                    <field name="tag_ids" string="Các từ khóa" widget="many2many_tags" />
+                    <field name="views" string="Lượt xem"/>
+                    <field name="active" string="Is Active?"/>
+                </tree>
+            </field>
+        </record>
+
+
 
     </data>
 </odoo>

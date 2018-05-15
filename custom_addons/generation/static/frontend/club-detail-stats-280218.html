@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Lao Premier League">
+    <meta name="keywords" content="Lao Premier League">
+    <meta name="author" content="Lao Premier League">
+    <title>club-detail-stats-280218</title>	
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" media="all">
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="all">	
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" media="all">
+    <link href='//fonts.googleapis.com/css?family=Poppins:300,400,600,400i,700' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="js/myscript.js"></script>
+    <script src="js/bootstrap.min.js"> </script>
+    <script src="js/jquery.min.js"> </script>
+
+    <!-- Owl Stylesheets -->
+    <link rel="stylesheet" href="js/owlcarousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="js/owlcarousel/assets/owl.theme.default.min.css">
+
+    <script src="js/vendors/jquery.min.js"></script>
+    <script src="js/owlcarousel/owl.carousel.js"></script>
+    <script src="js/owl.rows.js"></script>
+
+    <!-- vendors -->
+    <script src="js/vendors/highlight.js"></script>
+    <script src="js/app.js"></script>
+	<!--[if lt IE 9]>
+	<script src="css/respond.min.js"></script>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>		
+<![endif]-->
+</head> 
+
+<body>
+    <!-- start header -->
+    <header>
+       <div class="header-default">
+          <div class="container">
+             <div class="row no-margin">
+                <div class="col-md-3 col-sm-3 col-xs-12 no-padding">
+                   <div class="logo">
+                      <img src="images/logo.jpg" alt="Lao Premier League" />
+                </div>
+          </div>
+          <div class="col-md-9 col-sm-9 col-xs-12 no-padding">
+               <div class="row topbar no-margin">
+                  <div class="col-md-8 col-sm-8 col-xs-12">
+                     <div class="block club-team">
+                        <div class="block-title"> Clubs: </div>
+                        <div class="block-content">
+                           <!-- Start clubs images carousel -->
+                           <div class="owl-carousel owl-theme" id="clubs-carousel">
+                              <div class="item"> <a href="#"> <img src="images/club01.png" alt="club01" /></a> </div>
+                              <div class="item"> <a href="#"> <img src="images/club02.png" alt="club01" /></a> </div>
+                              <div class="item"> <a href="#"> <img src="images/club01.png" alt="club01" /></a> </div>
+                              <div class="item"> <a href="#"> <img src="images/club02.png" alt="club01" /></a> </div>
+                              <div class="item"> <a href="#"> <img src="images/club01.png" alt="club01" /></a> </div>
+                              <div class="item"> <a href="#"> <img src="images/club02.png" alt="club01" /></a> </div>
+                              <div class="item"> <a href="#"> <img src="images/club01.png" alt="club01" /></a> </div> 
+                              <div class="item"> <a href="#"> <img src="images/club02.png" alt="club01" /></a> </div>
+                              <div class="item"> <a href="#"> <img src="images/club01.png" alt="club01" /></a> </div>   
+                              <div class="item"> <a href="#"> <img src="images/club02.png" alt="club01" /></a> </div>
+                              <div class="item"> <a href="#"> <img src="images/club01.png" alt="club01" /></a> </div>        
+                        </div>
+                        <script type="text/javascript">
+                        	$(document).ready(function() {
+      var owl = $('#clubs-carousel');
+      owl.owlCarousel({
+        margin: 10,
+        nav: true,
+        loop: true,
+        responsive: {
+          0: {
+            items:2
+          },
+          600: {
+            items: 4
+          },
+          1000: {
+            items: 8,
+            nav:false
+          }
+        }
+      })
+    })
+                        </script>
+
+                  </div>
+            </div>
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="block block-search">
+               <form class="form-inline mt-2 mt-md-0">
+                   <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                   <button type="submit"> <i class="fa fa-search"> </i></button>
+             </form>
+       </div>
+ </div>
+</div>
+<div class="row megamenu no-margin">
+ <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+    <ul class="nav nav-pills nav-links">
+       <li><a href="#">Overview</a></li>
+       <li><a href="#" class="active">Squad</a></li>
+       <li><a href="#">Result </a></li>
+       <li><a href="#">Table</a></li>
+       <li><a href="#">Clubs </a></li>
+       <li><a href="#">Players</a></li>
+       <li><a href="#">Managers </a></li>
+       <li><a href="#">News</a></li>
+       <li><a href="#">Media Gallery</a></li>
+       <li><a href="#">Communities</a></li>
+ </ul>                                     
+</div>
+</div>
+</div>	
+</div>
+</div>
+</div>
+</header>
+<!-- End of header -->
+
+<!-- start of breadcrumbs -->
+<div class="breadcrumbs style-v3">
+  <div class="container">
+
+    <div class="club-logo">
+      <div class="image">
+        <img src="images/club_logo.png" alt="club_logo" />
+      </div>
+      <div class="content"> 
+        <h2> Manchester United </h2>
+        <span> <img src="images/icon-season.png" alt="icon-season"/>Old Trafford</span>
+        <span> <img src="images/icon-home.png" alt="icon home"/>Official Website: www.manutd.com</span>
+      </div>
+    </div>
+
+    <ul class="menu-news-v2 pull-left">
+        <li> <a href="#" > Overview </a> </li>
+        <li> <a href="#"> Squad </a> </li>
+        <li> <a href="#"> Fixtures </a> </li>
+        <li> <a href="#"> Results  </a> </li>
+        <li> <a href="#" class="active"> Stats</a> </li>
+        <li> <a href="#"> Stadium</a> </li>                  
+    </ul>
+  </div>
+</div>
+
+<!-- Main content homepage -->
+<div class="main-content">
+  <div class="container">
+      <!-- Start row 1 -->
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="block-start">
+            <div class="block-title">Matches Played </div>
+            <div class="block-content"> 
+                <div class="block-start-item">
+                  <div class="content-left table-responsive">
+                      <table class="process-left-table">
+                        <tr>
+                          <td>
+                              <div class="process-left"> <span style="width:75%;"> </span></div>
+                          </td>
+                          <td> 19 </td>
+                          <td> Win </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                              <div class="process-left"> <span style="width:15%;"> </span></div>
+                          </td>
+                          <td> 5 </td>
+                          <td> Losses </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                              <div class="process-left"> <span style="width:45%;"> </span></div>
+                          </td>
+                          <td> 5 </td>
+                          <td> Draw </td>
+                        </tr>
+                      </table>
+                  </div>
+
+                  <div class="content-center"><span class="text-red font-size-100">29</span></div>
+
+                  <div class="content-right table-responsive">
+                    <table class="process-right-table">
+                        <tr>
+                        <td> Win </td>
+                        <td> 19 </td>
+                          <td>
+                              <div class="process-right"> <span style="width:75%;"> </span></div>
+                          </td>
+                          
+                        </tr>
+
+                        <tr>
+                        
+                          <td> Losses </td>
+                           <td> 5 </td>
+                          <td>
+                              <div class="process-right"> <span style="width:15%;"> </span></div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td> Draw </td>
+                          <td> 5 </td>
+                          <td>
+                              <div class="process-right"> <span style="width:45%;"> </span></div>
+                          </td>
+                          
+                        </tr>
+                      </table>
+                    
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Start row 2 -->
+      <div class="row">
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="block-start">
+              <div class="block-title">Attack </div>
+              <div class="block-content"> 
+                  <div class="block-assists">
+                      <ul>  
+                      <li> 
+                          <div class="assist02">
+                            <span> Goals </span>
+                            <span class="pull-right"> Spain</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Goals Per Match </span>
+                            <span class="pull-right">29</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Shots</span>
+                            <span class="pull-right">15</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Shots On Target</span>
+                            <span class="pull-right">0</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Shooting Accuracy %</span>
+                            <span class="pull-right">0</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Penalties Scored</span>
+                            <span class="pull-right">0</span>
+                          </div>
+                      </li>
+
+                       <li> 
+                          <div class="assist02">
+                            <span>Big Chances Created</span>
+                            <span class="pull-right">0</span>
+                          </div>
+                      </li>
+
+                       <li> 
+                          <div class="assist02">
+                            <span>Hit Woodwork</span>
+                            <span class="pull-right">0</span>
+                          </div>
+                      </li>
+
+                  </ul>
+              </div>
+              </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="block-start">
+              <div class="block-title">Team Play</div>
+              <div class="block-content"> 
+                  <div class="block-assists">
+                      <ul>  
+                      <li> 
+                          <div class="assist02">
+                            <span>  Passes </span>
+                            <span class="pull-right"> Spain</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Passes Per Match </span>
+                            <span class="pull-right">29</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Pass Accuracy</span>
+                            <span class="pull-right">15</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Crosses</span>
+                            <span class="pull-right">0</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Cross Accurac</span>
+                            <span class="pull-right">0</span>
+                          </div>
+                      </li>
+                  </ul>
+              </div>
+              </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="block-start">
+              <div class="block-title">Defence</div>
+              <div class="block-content"> 
+                  <div class="block-assists">
+                      <ul>  
+                      <li> 
+                          <div class="assist02">
+                            <span>  Passes </span>
+                            <span class="pull-right"> Spain</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Passes Per Match </span>
+                            <span class="pull-right">29</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Pass Accuracy</span>
+                            <span class="pull-right">15</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Crosses</span>
+                            <span class="pull-right">0</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Cross Accurac</span>
+                            <span class="pull-right">0</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Passes Per Match </span>
+                            <span class="pull-right">29</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Pass Accuracy</span>
+                            <span class="pull-right">15</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Crosses</span>
+                            <span class="pull-right">0</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Cross Accurac</span>
+                            <span class="pull-right">0</span>
+                          </div>
+                      </li>
+                  </ul>
+              </div>
+              </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="block-start">
+              <div class="block-title">Discipline</div>
+              <div class="block-content"> 
+                  <div class="block-assists">
+                      <ul>  
+                      <li> 
+                          <div class="assist02">
+                            <span>  Passes </span>
+                            <span class="pull-right"> Spain</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Passes Per Match </span>
+                            <span class="pull-right">29</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Pass Accuracy</span>
+                            <span class="pull-right">15</span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span>Crosses</span>
+                            <span class="pull-right">0</span>
+                          </div>
+                      </li>
+
+                      
+                  </ul>
+              </div>
+              </div>
+          </div>
+        </div>
+
+
+      </div>
+
+      <!-- Start row 3 -->
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12"> <h4>2017/18 Lao Premier League Player Stats </h4></div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="block-table-list red-bg">
+          <div class="block-title">Goals</div>
+           <div class="block-content">
+              <div class="block-assists">
+                  <ul> 
+                      <li class="first-line">
+                          <div class="assist01"> 
+                              <div class="content">
+                                  <span class="number"> 1 </span>
+                                  <span class="name"> Josep Guardiola</span>
+                                  <span class="text-red font-size-30"> 14</span>
+                              </div>
+                              <div class="image"><img src="images/assist02.png" alt="club01" /> </div>
+                          </div>
+                      </li>
+                      <li> 
+                          <div class="assist02">
+                            <span class="number-no"> 2 </span>
+                            <span class="image"> 
+                              <img class="image-radius image-40" src="images/assist03.png" alt="club01" />
+                            </span>
+                            <span class="description">Matches</span>
+                            <span class="number red"> 65 </span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span class="number-no">3</span>
+                            <span class="image"> 
+                              <img class="image-radius image-40" src="images/assist03.png" alt="club01" />
+                            </span>
+                            <span class="description">Win</span>
+                            <span class="number red"> 65 </span>
+                          </div>
+                      </li>
+                    
+                       <li class="custom-button">
+                        <a href="#" class="view-full"> View Full List</a>
+                       </li>
+                  </ul>
+              </div>
+              </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="block-table-list red-bg">
+          <div class="block-title">Assists</div>
+           <div class="block-content">
+              <div class="block-assists">
+                  <ul> 
+                      <li class="first-line">
+                          <div class="assist01"> 
+                              <div class="content">
+                                  <span class="number"> 1 </span>
+                                  <span class="name"> Josep Guardiola</span>
+                                  <span class="text-red font-size-30"> 14</span>
+                              </div>
+                              <div class="image"><img src="images/assist02.png" alt="club01" /> </div>
+                          </div>
+                      </li>
+                      <li> 
+                          <div class="assist02">
+                            <span class="number-no"> 2 </span>
+                            <span class="image"> 
+                              <img class="image-radius image-40" src="images/assist03.png" alt="club01" />
+                            </span>
+                            <span class="description">Matches</span>
+                            <span class="number red"> 65 </span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span class="number-no">3</span>
+                            <span class="image"> 
+                              <img class="image-radius image-40" src="images/assist03.png" alt="club01" />
+                            </span>
+                            <span class="description">Win</span>
+                            <span class="number red"> 65 </span>
+                          </div>
+                      </li>
+                    
+                       <li class="custom-button">
+                        <a href="#" class="view-full"> View Full List</a>
+                       </li>
+                  </ul>
+              </div>
+              </div>
+          </div>
+        </div>
+
+
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="block-table-list red-bg">
+          <div class="block-title">Passes</div>
+           <div class="block-content">
+              <div class="block-assists">
+                  <ul> 
+                      <li class="first-line">
+                          <div class="assist01"> 
+                              <div class="content">
+                                  <span class="number"> 1 </span>
+                                  <span class="name"> Josep Guardiola</span>
+                                  <span class="text-red font-size-30"> 14</span>
+                              </div>
+                              <div class="image"><img src="images/assist02.png" alt="club01" /> </div>
+                          </div>
+                      </li>
+                      <li> 
+                          <div class="assist02">
+                            <span class="number-no"> 2 </span>
+                            <span class="image"> 
+                              <img class="image-radius image-40" src="images/assist03.png" alt="club01" />
+                            </span>
+                            <span class="description">Matches</span>
+                            <span class="number red"> 65 </span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span class="number-no">3</span>
+                            <span class="image"> 
+                              <img class="image-radius image-40" src="images/assist03.png" alt="club01" />
+                            </span>
+                            <span class="description">Win</span>
+                            <span class="number red"> 65 </span>
+                          </div>
+                      </li>
+                    
+                       <li class="custom-button">
+                        <a href="#" class="view-full"> View Full List</a>
+                       </li>
+                  </ul>
+              </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="block-table-list red-bg">
+          <div class="block-title">Shot</div>
+           <div class="block-content">
+              <div class="block-assists">
+                  <ul> 
+                      <li class="first-line">
+                          <div class="assist01"> 
+                              <div class="content">
+                                  <span class="number"> 1 </span>
+                                  <span class="name"> Josep Guardiola</span>
+                                  <span class="text-red font-size-30"> 14</span>
+                              </div>
+                              <div class="image"><img src="images/assist02.png" alt="club01" /> </div>
+                          </div>
+                      </li>
+                      <li> 
+                          <div class="assist02">
+                            <span class="number-no"> 2 </span>
+                            <span class="image"> 
+                              <img class="image-radius image-40" src="images/assist03.png" alt="club01" />
+                            </span>
+                            <span class="description">Matches</span>
+                            <span class="number red"> 65 </span>
+                          </div>
+                      </li>
+
+                      <li> 
+                          <div class="assist02">
+                            <span class="number-no">3</span>
+                            <span class="image"> 
+                              <img class="image-radius image-40" src="images/assist03.png" alt="club01" />
+                            </span>
+                            <span class="description">Win</span>
+                            <span class="number red"> 65 </span>
+                          </div>
+                      </li>
+                    
+                       <li class="custom-button">
+                        <a href="#" class="view-full"> View Full List</a>
+                       </li>
+                  </ul>
+              </div>
+              </div>
+          </div>
+        </div>
+
+
+      </div>
+
+  </div>
+</div>
+
+<!-- start html footer -->
+<section class="footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2 col-sm-12 col-xs-12">
+          <div class="logo-footer">
+            <img src="images/logo-small.png" alt="Lao Premier League" />
+          </div>
+        </div>
+
+        <div class="col-md-10 col-sm-12 col-xs-12">
+          <div class="block brand-list">
+            <div class="block-title">Official <strong>Sponsors</strong> </div>
+            <div class="block-content">
+              <!-- Start brands images carousel -->
+                                         <div class="owl-carousel owl-theme" id="brands-carousel">
+                                             <div class="item">  
+                                                 <img class="brands-image" src="images/brand01.jpg" alt="">
+                                           </div>
+
+                                           <div class="item"> 
+                                                 <img class="brands-image" src="images/brand01.jpg" alt="">
+                                           </div>
+
+                                           <div class="item">
+                                                 <img class="brands-image" src="images/brand01.jpg" alt="">
+                                           </div>
+
+                                           <div class="item"> 
+                                                 <img class="brands-image" src="images/brand01.jpg" alt="">
+                                           </div>
+
+                                           <div class="item"> 
+                                              <img class="brands-image" src="images/brand01.jpg" alt="">
+                                        </div>
+
+                                        <div class="item">
+                                           <img class="brands-image" src="images/brand01.jpg" alt="">
+                                     </div>
+
+                               </div>
+                               <script>
+                                     $(document).ready(function() {
+                                         var owl = $('#brands-carousel');
+                                         owl.owlCarousel({
+                                             margin: 10,
+                                             nav: true,
+                                             loop: true,
+                                             dots:false,
+                                             responsiveClass:true,
+                                             responsive: {
+                                                 0: {
+                                                     items: 1
+                                               },
+                                               600: {
+                                                     items: 3
+                                               },
+                                               1000: {
+                                                     items: 5
+                                               }
+                                         }
+                                   })
+                                   })
+                             </script>
+                       </div>
+                 </div>
+           </div>
+     </div>
+</div>
+</div>
+
+<div class="footer-center">
+    <div class="container">
+       <div class="row">
+          <div class="col-md-3 col-sm-12 col-xs-12">
+             <div class="block block-aboutus">
+                <div class="block-title"> Lao Premier League</div>
+                <div class="block-content"> 
+                   <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s </p>
+                   <p> <a href="#"> More detail </a> </p>
+             </div>
+       </div>
+       <div class="block block-social">
+            <div class="block-content">
+               <p> Lao Premier League on Social </p>
+               <ul class="social">
+                  <li> <a href="#"> <i class="fa fa-facebook"> </i> </a> </li>
+                  <li> <a href="#"> <i class="fa fa-google"> </i></a></li>
+                  <li> <a href="#"> <i class="fa fa-youtube"> </i> </a> </li>
+                  <li> <a href="#"> <i class="fa fa-facebook"> </i> </a></li>
+                  <li> <a href="#"> <i class="fa fa-facebook"> </i> </a></li>
+            </ul> 
+      </div>
+</div>
+</div>
+
+<div class="col-md-3 col-sm-4 col-xs-12">
+   <div class="block block-link">
+      <div class="block-title"> League</div>
+      <div class="block-content"> 
+         <ul class="list-unstyled"> 
+            <li> <a href="#"> Home </a> </li>
+            <li> <a href="#"> Fixtures </a> </li>
+            <li> <a href="#"> Result </a> </li>
+            <li> <a href="#"> Tables </a> </li>
+            <li> <a href="#"> Clubs </a> </li>
+            <li> <a href="#"> Players </a> </li>
+            <li> <a href="#"> Managers</a> </li>
+            <li> <a href="#"> News </a> </li>
+      </ul>
+</div>
+</div>
+</div>
+
+<div class="col-md-3 col-sm-4 col-xs-12">
+   <div class="block block-link">
+      <div class="block-title"> Stats</div>
+      <div class="block-content"> 
+         <ul class="list-unstyled"> 
+            <li> <a href="#"> Dashboard  </a> </li>
+            <li> <a href="#"> Player Stats</a> </li>
+            <li> <a href="#"> Club Stats  </a> </li>
+            <li> <a href="#"> All-time Stats </a> </li>
+            <li> <a href="#"> Head-to-Head  </a> </li>
+            <li> <a href="#"> Awards </a> </li>
+      </ul>
+</div>
+</div>
+</div>
+
+<div class="col-md-3 col-sm-4 col-xs-12">
+   <div class="block block-link">
+      <div class="block-title"> Communities</div>
+      <div class="block-content"> 
+         <ul class="list-unstyled"> 
+            <li> <a href="#"> Latest</a> </li>
+            <li> <a href="#"> Programmes</a> </li>
+            <li> <a href="#"> PL Kicks Heroes</a> </li>
+            <li> <a href="#"> Strategy </a> </li>
+            <li> <a href="#"> Lao Premier League Primary Stars </a> </li>
+      </ul>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="footer-bottom">
+  <div class="container">
+    <div class="copyright">
+      © Copyright by <a href="#">Lao Premier League </a> All rights reserved.
+</div>
+</div>
+</div>
+</section>
+
+<div id="top">
+    <a href="#" class="scrollup"><i class="fa fa-angle-double-up"></i></a>
+</div>
+
+</body>
+</html>

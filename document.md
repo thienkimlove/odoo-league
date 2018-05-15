@@ -1384,7 +1384,231 @@ def _compute_user_todo_count(self):
         super(Player, self).write(vals)
         return True
 ```
-##### Continue..
+##### About relation in Odoo
+
+`https://supportuae.wordpress.com/2017/09/06/how-to-update-many2many-field/`
+
+`https://stackoverflow.com/questions/41376641/cannot-add-fields-to-a-many2many-relation-class`
+
+##### Debug In Odoo
+
+in `models.py` we have code
+
+```textmate
+from odoo import exceptions
+import logging
+_logger = logging.getLogger(__name__)
+```
+And log the data to view in `odoo.log`
+
+```textmate
+record = super(Player, self).create(vals)
+
+        # Logging debug messages
+        _logger.debug('Current record %s', repr(record))
+```
+##### 
+
+### Frontend Page
+
+```textmate
+@http.route('/', auth='public')
+```
+
+* we added the `auth='public'` argument to the route.
+ 
+This is needed for the page to be available to non-authenticated users.
+If we remove it, only authenticated users can see the page. 
+
+If no session is active, the login screen will be shown instead.
+
+`'data': ['views/todo_web.xml'],`
+
+```textmate
+<odoo>
+<template id="hello" name="Hello Template">
+<h1>Hello World !</h1>
+</template>
+</odoo>
+```
+
+* The `<template>` element is actually a shortcut for declaring a `<record>` for the `ir.ui.view` model, using `type="qweb"`.
+
+* `auth='public'`
+argument to the route. 
+This is needed for the page to be available to non-authenticated users. 
+
+If we remove it, only authenticated users can see the page. 
+
+If no session is active, the login screen will be shown instead.
+
+The `auth='public'` parameter actually means that the request will use the special `public` user to run the web controller for any visitor that is not already authenticated. 
+
+If they are, the logged in user is used, instead of public.
+
+
+* Access to models data on frontend
+
+```textmate
+@http.route('/generation', auth='none')
+    def index(self, **kw):
+        records = request.env['generation.player'].sudo().search([])
+        return http.request.render('generation.index', {
+                 'records': records,
+             })
+```
+
+
+* Using session on frontend `from odoo.http import request`
+```textmate
+request.session['hello'] = 'world'
+request.session.get('hello')
+```
+
+#####  `website=True`
+ 
+This parameter is not strictly required for integration with the website module. 
+
+We can use the website layout in our template views without adding it. 
+
+However, it does make a few features available that can then be used by our web controller:
+
+*  The route will automatically become multilingual and attempt to auto-detect the closest language to use from the website's installed languages. 
+It's worth noting that this can cause rerouting and re-directions.
+
+* Any exceptions thrown by the controller will be handled by the website code, and a friendlier error page will be shown to the visitors, instead of the default error code.
+
+* The `request.website` variable, with a browse record of the current Website record, will become available on the request.
+
+* The public user for any `auth=public` route will be the Public User selected on the Website configurations in the backend. This might be relevant for matters of localization, timezones, and so on.
+
+
+If none of the preceding features are relevant for the web controller, the `website=True` parameter can be omitted.
+
+To add the website's general layout to our templates, we should wrap our QWeb/HTML with a `t-call="website.layout"` directive
+
+* Customize layout using `odoo\addons\website\views\website_templates.xml`
+
+* Get database from frontend controller without permission
+
+`http.request.env['generation.post'].sudo().search([])`
+
+* Render template
+
+```textmate
+<t t-foreach="records" t-as="record">
+   <div class="item">
+       <div class="news-item style-v1">
+           <div class="images">
+               <img
+                       t-attf-src="data:image/*;base64,#{record.image}"
+                       t-att-alt="record.name"
+               />
+           </div>
+           <div class="new-content">
+               <div class="time"> <i class="fa fa-clock-o"> </i> <t t-esc="record.create_date" /> </div>
+               <div class="news-name"><t t-esc="record.name" /></div>
+               <div class="news-des">
+                   <t t-esc="record.desc" />
+               </div>
+           </div>
+       </div>
+   </div>
+</t>
+```
+
+* Tutorials for Odoo template
+
+1. You can easily add new elements or style the existing one.
+   
+ To do so, create a `layout.xml` file in your views folder and add the default Odoo xml markup.
+ 
+ ```textmate
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+
+
+</odoo>
+```
+2. Create a new template into the `<odoo>` tag, copy-pasting the following code.
+
+```textmate
+<!-- Customize header  -->
+<template id="custom_header" inherit_id="website.layout" name="Custom Header">
+
+  <!-- Assign an id  -->
+  <xpath expr="//div[@id='wrapwrap']/header" position="attributes">
+    <attribute name="id">my_header</attribute>
+  </xpath>
+
+  <!-- Add an element after the top menu  -->
+  <xpath expr="//div[@id='wrapwrap']/header/div" position="after">
+    <div class="container">
+      <div class="alert alert-info mt16" role="alert">
+        <strong>Welcome</strong> in our website!
+      </div>
+    </div>
+  </xpath>
+</template>
+```
+
+The first xpath will add the id `my_header` to the header. It’s the best option if you want to target css rules to that element and avoid these affecting other content on the page.
+
+* Warning
+```textmate
+Be careful replacing default elements attributes. As your theme will extend the default one, your changes will take priority in any future Odoo’s update.
+```
+
+* Sometimes you need to call a function from QWeb and get image. This code help me to read proper image field and print it with QWeb.
+  
+`<t t-foreach="get_image(id)" t-as="image_browse">
+   <span t-field="image_browse.image" t-field-options='{"widget": "image"}'/> 
+</t>`
+`image_browse` is a browse of id that send by `get_image(id)`.
+
+
+If you want to show an image from the database you can just use the image widget like this:
+
+`<span t-field="o.image_field_name" t-field-options='{"widget": "image"}'/>`
+
+But this make a `<span>` outside `<img />` element.
+
+We must using on parent element of img element as below.
+
+```textmate
+ <div class="images"   t-field="record.image"
+                        t-field-options='{"widget": "image","style": "width:573px; height:383px"}'>
+   </div>
+```
+
+
+ 
+And if you want to show an image stored as a file:
+
+`<img t-att-src="'/module_name/static/src/img/image_name.png'" />`
+Note: respect the order and the type of the quotes
+
+* Explain by videos about Theme Odoo 11 `https://www.youtube.com/watch?v=LAM0R8Yjf2A`
+
+* Catch Exception in Controller Odoo 11
+
+```textmate
+class FooBarController(http.Controller):
+    @http.route('/foobar/create/', auth='public', website=True)
+    def create(self, foo, bar):
+        try:
+            http.request.env['my.foobar'].create({
+                'foo': foo,
+                'bar': bar,
+            })
+            return http.request.render('my.thank_you_page')
+        except IntegrityError:
+            # can't use the usual `http.request.env.cr` style,
+            # because `env` queries db and everything explodes
+            http.request._cr.rollback()
+            return http.request.render('my.error_page')
+```
 
 
 
