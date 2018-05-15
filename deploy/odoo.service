@@ -6,6 +6,6 @@ Type=simple
 User=root
 Group=root
 WorkingDirectory=/var/www/html/odoo_league
-ExecStart=/var/www/html/odoo_league/deploy/start-odoo.sh
+ExecStart=/root/Env/odoo_league/bin/python3 /var/www/html/odoo_league/odoo/odoo-bin -c /var/www/html/odoo_league/odoorc "$@"
 [Install]
 WantedBy=multi-user.target
