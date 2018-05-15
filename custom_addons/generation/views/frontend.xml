@@ -166,10 +166,14 @@
                                                <t t-foreach="records" t-as="record">
                                                    <div class="item">
                                                        <div class="news-item style-v1">
-                                                           <div class="images" t-field="record.image"
+                                                           <!--<div class="images" t-field="record.image"
                                                                 t-field-options='{"widget": "image"}'>
 
-                                                           </div>
+                                                           </div>-->
+                                                           <div class="images">
+                                                               <img class="img-responsive" t-attf-src="data:image/*;base64,#{record.image}"
+                                                                    t-att-alt="record.name" />
+                                                          </div>
                                                            <div class="new-content">
                                                                <div class="time"> <i class="fa fa-clock-o"> </i> <t t-esc="record.create_date" /> </div>
                                                                <div class="news-name"><t t-esc="record.name" /></div>
