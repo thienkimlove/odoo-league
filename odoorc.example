@@ -7,8 +7,5 @@ db_name = league_debug
 db_password = tieungao123
 db_user = tieungao
 data_dir = ~/.local/share/odoo_league
-
-http_port = 9160
-
 without_demo = all
 workers = 0
